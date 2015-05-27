@@ -1,0 +1,25 @@
+@import url(bootstrap.min.css);
+
+#boards_dd {
+    background-color: #777;
+    border-color: #777;
+    color: #fff;
+    outline: none;
+    height: 30px;
+    line-height: 17px;
+}
+#board_container {
+    padding: 5px 10px;
+    margin: 2px 10px;
+    border: 1px solid;
+}
+.board-list {
+    width: 300px;
+    margin-right: 10px
+}
+
+#header {
+    background: #000;      
+    height: 40px;      
+    overflow: hidden;      padding: 5px;      position: relative;      z-index: 10;
+}

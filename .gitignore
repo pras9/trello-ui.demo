@@ -1,0 +1,6 @@
+!.gitignore
+.idea
+.settings
+__files/unversioned/*
+.brackets.json
+node_modules/*

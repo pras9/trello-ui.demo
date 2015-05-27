@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Manage Your Idea</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
+    <link href="styles/core.css" rel="stylesheet" />
+</head>
+
+<body class="chrome chrome-43 windows body-webkit-scrollbars body-board-view" style="background-color: rgb(14, 116, 175);">
+    <div id="nocss">Your browser was unable to load all of Trello's resources. They may have been blocked by your firewall, proxy or browser configuration.
+        <br>Press Ctrl+F5 or Ctrl+Shift+R to have your browser try again.
+        <hr>
+    </div>
+    <div id="surface" class="clearfix" style="min-height: 629px;">
+        <div id="header"><a class="header-logo js-home-via-logo" href="/"><span class="header-logo-loading"></span><span class="header-logo-default"></span></a>
+            <div class="header-boards-button"><a class="header-btn header-boards js-boards-menu" href="#"><span class="header-btn-icon icon-lg icon-board light"></span><span class="header-btn-text">Boards</span></a>
+            </div>
+            <div><a class="header-btn open-search-btn js-open-search-page" href="/search" title="Search for boards, cards, members, and organizations."><span class="header-btn-icon icon-lg icon-search light"></span></a>
+                <div class="header-search">
+                    <input class="header-search-input js-search-input js-disable-on-dialog" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value=""><span class="header-search-icon icon-lg icon-search light js-search-icon js-search-focus"></span><span class="header-search-icon header-search-icon-close icon-lg icon-close light hide js-close-icon js-search-close"></span>
+                    <a class="header-search-icon header-search-icon-open icon-lg icon-external-link light hide js-open-button js-open-search-page" href="#"></a>
+                </div>
+            </div>
+            <div><a class="header-btn header-woof woof-hide" href="#"><span class="taco-talk-small-icon"></span><span class="header-btn-text"><span class="left-arrow"></span><span class="js-phrase">New stuff!</span></span></a>
+            </div>
+            <div class="header-user"><a class="header-btn js-open-add-menu" href="#"><span class="header-btn-icon icon-lg icon-add light"></span></a><a class="header-btn header-member js-open-header-member-menu" href="#"><span class="member"><img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a58379371c75f10ce2a35fe8ebd2c09a/30.png" alt="pras (pras12)" title="pras (pras12)"><span class="member-gold-badge" title="This member has Trello Gold."></span></span><span class="header-btn-text js-member-name">pras</span></a><a class="header-btn header-notifications js-open-header-notifications-menu" href="#"><span class="header-btn-icon icon-lg icon-notification light"></span></a>
+            </div>
+        </div>
+        <p id="notification"></p>
+        <div id="content" class="clearfix">
+            <div class="board-wrapper is-show-menu">
+                <div class="board-header u-clearfix js-board-header"><a class="board-header-btn board-header-btn-name js-rename-board" href="#"><span class="board-header-btn-text">Welcome Board</span></a>
+                    <div class="board-header-btns mod-left"><a class="board-header-btn js-star-board" href="#" title="Click to star or unstar this board. Starred boards show up at the top of your boards list."><span class="icon-sm icon-star board-header-btn-icon"></span></a><a class="board-header-btn hide js-open-desc js-fill-desc" href="#"><span class="icon-sm icon-description board-header-btn-icon"></span></a><a id="permission-level" class="board-header-btn perms-btn js-change-vis" href="#" title="This board is private. Only people added to the board can view and edit it."><span class="board-header-btn-icon icon-sm icon-private"></span><span class="board-header-btn-text">Private</span></a>
+                    </div>
+                    <div class="board-header-btns mod-right"><a class="board-header-btn board-header-btn-filter-indicator hide js-filter-cards-indicator" href="#"><span class="icon-sm icon-filter board-header-btn-icon"></span><span class="board-header-btn-text u-text-underline">Filtering is on.</span><span class="icon-sm icon-close board-header-btn-icon-close js-filter-card-clear"></span></a><a class="board-header-btn sub-btn hide js-board-header-subscribed" href="#"><span class="icon-sm icon-subscribe board-header-btn-icon"></span><span class="board-header-btn-text u-text-underline">Subscribed</span></a><a class="board-header-btn calendar-btn hide js-calendar" href="#"><span class="icon-sm icon-calendar board-header-btn-icon"></span><span class="board-header-btn-text u-text-underline">Calendar</span></a><a class="board-header-btn mod-show-menu js-show-sidebar" href="#"><span class="icon-sm icon-back board-header-btn-icon"></span><span class="board-header-btn-text u-text-underline">Show Menu</span></a>
+                    </div>
+                </div>
+                <div class="board-widgets js-board-widgets-view">
+                    <div><a class="sidebar-hide-btn dark-hover js-hide-sidebar" href="#"><span class="icon-sm icon-forward"></span></a>
+                        <div class="board-widgets-container">
+                            <div class="board-widgets-title js-board-menu-title"><a class="board-sidebar-back-btn js-pop-widget-view" href="#"><span class="left-arrow"></span> Back</a>
+                                <h3 class="text js-board-menu-title-text"></h3>
+                                <hr>
+                            </div>
+                            <div class="board-widgets-content-wrapper u-fancy-scrollbar js-board-menu-content-wrapper">
+                                <div class="board-widgets-content board-widgets-content--default-view">
+                                    <p class="error js-file-too-large" style="margin: 12px 0 6px; display:none;">File too large. 10mb limit.</p>
+                                    <div class="board-widget board-widget--nav u-clearfix collapsed">
+                                        <h3 class="dark-hover toggle-widget-nav js-toggle-widget-nav">Menu<span class="icon-sm icon-dropdown-menu toggle-menu-icon"></span></h3>
+                                        <ul class="nav-list">
+                                            <hr style="margin-top: 0;">
+                                            <li><a class="nav-list-item js-open-power-ups" href="#"><span class="icon-sm icon-power-up icon-type"></span> Power-Ups</a>
+                                            </li>
+                                            <li><a class="nav-list-item js-open-labels" href="#"><span class="icon-sm icon-label icon-type"></span> Labels</a>
+                                            </li>
+                                            <li><a class="nav-list-item js-open-stickers" href="#"><span class="icon-sm icon-sticker icon-type"></span> Stickers</a>
+                                            </li>
+                                            <li><a class="nav-list-item js-open-card-filter" href="#"><span class="icon-sm icon-filter icon-type"></span> Filter Cards</a>
+                                            </li>
+                                            <li><a class="nav-list-item js-open-archive" href="#"><span class="icon-sm icon-archive icon-type"></span> Archived Items</a>
+                                            </li>
+                                            <hr>
+                                            <li><a class="nav-list-item nav-list-sub-item board-settings-background js-change-background" href="#"><span class="board-settings-background-preview" style="background-color:#0E74AF"></span>Change Background…</a>
+                                            </li>
+                                            <li><a class="nav-list-item nav-list-sub-item js-email" href="#">Email-to-board Settings…</a>
+                                            </li>
+                                            <li><a class="nav-list-item nav-list-sub-item js-board-subscribe" href="#"><span class="js-subscribed-state">Subscribe </span></a>
+                                            </li>
+                                            <li><a class="nav-list-item nav-list-sub-item js-copy-board" href="#">Copy Board…</a>
+                                            </li>
+                                            <li><a class="nav-list-item nav-list-sub-item js-share" href="#">Share, Print, and Export…</a>
+                                            </li>
+                                            <hr>
+                                            <li><a class="nav-list-item nav-list-sub-item js-open-settings" href="#">Additional Settings…</a>
+                                            </li>
+                                            <li><a class="nav-list-item nav-list-sub-item js-close-board" href="#">Close Board…</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <hr>
+                                    <div class="board-widget u-clearfix">
+                                        <div class="board-widget-title">
+                                            <h3>Members</h3>
+                                        </div>
+                                        <div class="board-widget-content">
+                                            <div class="board-widget-members u-clearfix js-list-board-members  js-list-draggable-board-members">
+                                                <div class="member ui-draggable">
+                                                    <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a58379371c75f10ce2a35fe8ebd2c09a/30.png" alt="pras (pras12)" title="pras (pras12)"><span class="member-type admin" title="This member is an admin of this board."></span><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                                </div>
+                                                <div class="member ui-draggable">
+                                                    <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a6cc37f6849928acb91064cf65e61cbc/30.png" alt="Trello (trello)" title="Trello (trello)"><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                                </div>
+                                            </div>
+                                            <div class="board-members-extras-button u-clearfix js-extra-members-button"><a class="quiet-button js-show-extra-members" href="#">Show All Members <span class="js-fill-extras-length"></span></a>
+                                            </div>
+                                            <div class="js-list-observers"></div><a class="button-link js-open-manage-board-members" href="#"><span class="icon-sm icon-member"></span> Add Members…</a>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="board-widget board-widget--activity u-bottom u-clearfix">
+                                        <div class="board-widget-title">
+                                            <h3>Activity</h3>
+                                        </div>
+                                        <div class="board-widget-content">
+                                            <div class="board-actions-list u-fancy-scrollbar">
+                                                <div class="js-sidebar-list-actions">
+                                                    <div class="phenom phenom-action u-clearfix phenom-other">
+                                                        <div class="creator member js-show-mem-menu">
+                                                            <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a58379371c75f10ce2a35fe8ebd2c09a/30.png" alt="pras (pras12)" title="pras (pras12)"><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                                        </div>
+                                                        <div class="phenom-desc"><span class="inline-member js-show-mem-menu" idmember="549d33c461c7539ff6d283ea"><span class="u-font-weight-bold">pras</span></span>removed Checklist from <a class="action-card" href="https://trello.com/c/bou7yk13">Welcome to Trello!</a>
+                                                        </div>
+                                                        <p class="phenom-meta quiet">&nbsp;<span class="date js-hide-on-sending" dt="2015-05-26T11:46:32.818Z" title="May 26 2015 5:16 PM">5 hours ago</span><span class="js-spinner hide"><span class="spinner spinner--inline mod-left small"></span> Sending…</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="phenom phenom-action u-clearfix phenom-other">
+                                                        <div class="creator member js-show-mem-menu">
+                                                            <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a58379371c75f10ce2a35fe8ebd2c09a/30.png" alt="pras (pras12)" title="pras (pras12)"><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                                        </div>
+                                                        <div class="phenom-desc"><span class="inline-member js-show-mem-menu" idmember="549d33c461c7539ff6d283ea"><span class="u-font-weight-bold">pras</span></span>archived new list</div>
+                                                        <p class="phenom-meta quiet">&nbsp;<span class="date js-hide-on-sending" dt="2015-05-21T14:48:42.280Z" title="May 21 2015 8:18 PM">May 21 at 8:18 PM</span><span class="js-spinner hide"><span class="spinner spinner--inline mod-left small"></span> Sending…</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="phenom phenom-action u-clearfix phenom-other">
+                                                        <div class="creator member js-show-mem-menu">
+                                                            <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a58379371c75f10ce2a35fe8ebd2c09a/30.png" alt="pras (pras12)" title="pras (pras12)"><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                                        </div>
+                                                        <div class="phenom-desc"><span class="inline-member js-show-mem-menu" idmember="549d33c461c7539ff6d283ea"><span class="u-font-weight-bold">pras</span></span>added <a class="action-card" href="https://trello.com/c/D77tWiv3">new caRD</a> to new list</div>
+                                                        <p class="phenom-meta quiet">&nbsp;<span class="date js-hide-on-sending" dt="2015-05-21T14:48:10.909Z" title="May 21 2015 8:17 PM">May 21 at 8:17 PM</span><span class="js-spinner hide"><span class="spinner spinner--inline mod-left small"></span> Sending…</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="phenom phenom-action u-clearfix phenom-other">
+                                                        <div class="creator member js-show-mem-menu">
+                                                            <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a58379371c75f10ce2a35fe8ebd2c09a/30.png" alt="pras (pras12)" title="pras (pras12)"><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                                        </div>
+                                                        <div class="phenom-desc"><span class="inline-member js-show-mem-menu" idmember="549d33c461c7539ff6d283ea"><span class="u-font-weight-bold">pras</span></span>added new list to this board</div>
+                                                        <p class="phenom-meta quiet">&nbsp;<span class="date js-hide-on-sending" dt="2015-05-21T14:48:04.411Z" title="May 21 2015 8:17 PM">May 21 at 8:17 PM</span><span class="js-spinner hide"><span class="spinner spinner--inline mod-left small"></span> Sending…</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="phenom phenom-action u-clearfix phenom-comment">
+                                                        <div class="creator member js-show-mem-menu">
+                                                            <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a58379371c75f10ce2a35fe8ebd2c09a/30.png" alt="pras (pras12)" title="pras (pras12)"><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                                        </div>
+                                                        <div class="phenom-desc"><span class="inline-member js-show-mem-menu" idmember="549d33c461c7539ff6d283ea"><span class="u-font-weight-bold">pras</span></span>on <a class="action-card" href="https://trello.com/c/bou7yk13">Welcome to Trello!</a> 
+                                                            <div class="action-comment markeddown">
+                                                                <div class="current-comment">
+                                                                    <p>Hello</p>
+                                                                </div>
+                                                                <textarea class="js-text" tabindex="1">Hello</textarea>
+                                                            </div>
+                                                        </div>
+                                                        <p class="phenom-meta quiet">&nbsp;<span class="date js-hide-on-sending" dt="2015-05-19T11:29:06.935Z" title="May 19 2015 4:58 PM">May 19 at 4:58 PM</span><span class="js-spinner hide"><span class="spinner spinner--inline mod-left small"></span> Sending…</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="phenom phenom-action u-clearfix phenom-other">
+                                                        <div class="creator member js-show-mem-menu">
+                                                            <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a58379371c75f10ce2a35fe8ebd2c09a/30.png" alt="pras (pras12)" title="pras (pras12)"><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                                        </div>
+                                                        <div class="phenom-desc"><span class="inline-member js-show-mem-menu" idmember="549d33c461c7539ff6d283ea"><span class="u-font-weight-bold">pras</span></span>enabled the card aging power-up</div>
+                                                        <p class="phenom-meta quiet">&nbsp;<span class="date js-hide-on-sending" dt="2014-12-26T10:28:16.052Z" title="December 26 2014 3:57 PM">Dec 26 2014 at 3:57 PM</span><span class="js-spinner hide"><span class="spinner spinner--inline mod-left small"></span> Sending…</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="phenom phenom-action u-clearfix phenom-other">
+                                                        <div class="creator member js-show-mem-menu">
+                                                            <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a58379371c75f10ce2a35fe8ebd2c09a/30.png" alt="pras (pras12)" title="pras (pras12)"><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                                        </div>
+                                                        <div class="phenom-desc"><span class="inline-member js-show-mem-menu" idmember="549d33c461c7539ff6d283ea"><span class="u-font-weight-bold">pras</span></span>re-opened this board</div>
+                                                        <p class="phenom-meta quiet">&nbsp;<span class="date js-hide-on-sending" dt="2014-12-26T10:23:14.231Z" title="December 26 2014 3:52 PM">Dec 26 2014 at 3:52 PM</span><span class="js-spinner hide"><span class="spinner spinner--inline mod-left small"></span> Sending…</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="phenom phenom-action u-clearfix phenom-other">
+                                                        <div class="creator member js-show-mem-menu">
+                                                            <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a58379371c75f10ce2a35fe8ebd2c09a/30.png" alt="pras (pras12)" title="pras (pras12)"><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                                        </div>
+                                                        <div class="phenom-desc"><span class="inline-member js-show-mem-menu" idmember="549d33c461c7539ff6d283ea"><span class="u-font-weight-bold">pras</span></span>closed this board</div>
+                                                        <p class="phenom-meta quiet">&nbsp;<span class="date js-hide-on-sending" dt="2014-12-26T10:22:50.357Z" title="December 26 2014 3:52 PM">Dec 26 2014 at 3:52 PM</span><span class="js-spinner hide"><span class="spinner spinner--inline mod-left small"></span> Sending…</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="phenom phenom-action u-clearfix phenom-other">
+                                                        <div class="creator member js-show-mem-menu">
+                                                            <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a6cc37f6849928acb91064cf65e61cbc/30.png" alt="Trello (trello)" title="Trello (trello)"><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                                        </div>
+                                                        <div class="phenom-desc"><span class="inline-member js-show-mem-menu" idmember="4e6a7fad05d98b02ba00845c"><span class="u-font-weight-bold">Trello</span></span>made this board visible to the public</div>
+                                                        <p class="phenom-meta quiet">&nbsp;<span class="date js-hide-on-sending" dt="2014-01-13T16:43:44.870Z" title="January 13 2014 10:13 PM">Jan 13 2014 at 10:13 PM</span><span class="js-spinner hide"><span class="spinner spinner--inline mod-left small"></span> Sending…</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="phenom phenom-action u-clearfix phenom-other">
+                                                        <div class="creator member js-show-mem-menu">
+                                                            <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a6cc37f6849928acb91064cf65e61cbc/30.png" alt="Trello (trello)" title="Trello (trello)"><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                                        </div>
+                                                        <div class="phenom-desc"><span class="inline-member js-show-mem-menu" idmember="4e6a7fad05d98b02ba00845c"><span class="u-font-weight-bold">Trello</span></span>deleted the <span class="attachment-deleted">taco.png</span> attachment from <a class="action-card" href="https://trello.com/c/tVOKKKJS">You can attach pictures and files...</a>
+                                                        </div>
+                                                        <p class="phenom-meta quiet">&nbsp;<span class="date js-hide-on-sending" dt="2014-01-13T16:37:19.015Z" title="January 13 2014 10:07 PM">Jan 13 2014 at 10:07 PM</span><span class="js-spinner hide"><span class="spinner spinner--inline mod-left small"></span> Sending…</span>
+                                                        </p>
+                                                    </div>
+                                                </div><a class="show-more js-view-all-activity-list" href="#">View all activity…</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="board-canvas" style="height: 539px;">
+                    <div id="board" class="u-fancy-scrollbar js-no-higher-edits js-list-sortable ui-sortable">
+                        <div class="list">
+                            <div class="list-header js-list-header non-empty u-clearfix editable" attr="name">
+                                <h2 class="list-header-name hide-on-edit js-list-name current">Basics</h2> 
+                                <p class="list-header-num-cards hide js-num-cards">6 cards</p><span class="list-header-subscribe-icon icon-sm icon-subscribe js-list-subscribed hide"></span>
+                                <div class="edit edit-heavy u-clearfix">
+                                    <textarea class="field single-line" type="text"></textarea>
+                                </div>
+                                <a class="list-header-menu-icon icon-sm icon-dropdown-menu dark-hover js-open-list-menu" href="#"></a>
+                            </div>
+                            <div class="list-cards u-fancy-scrollbar u-clearfix js-list-cards js-sortable ui-sortable">
+                                <div class="list-card js-member-droppable aging-level-0 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/bou7yk13/1-welcome-to-trello"><span class="card-short-id hide">#1</span>Welcome to Trello!</a>
+                                        <div class="badges">
+                                            <div title="Comments" class="badge"><span class="badge-icon icon-sm icon-comment"></span><span class="badge-text">1</span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/kb0NODDS/2-this-is-a-card"><span class="card-short-id hide">#2</span>This is a card.</a>
+                                        <div class="badges"></div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/fkS9mnU3/3-click-on-a-card-to-see-what-s-behind-it"><span class="card-short-id hide">#3</span>Click on a card to see what's behind it.</a>
+                                        <div class="badges">
+                                            <div title="This card has a description." class="badge badge-state-image-only"><span class="badge-icon icon-sm icon-description"></span>
+                                            </div>
+                                            <div title="Comments" class="badge"><span class="badge-icon icon-sm icon-comment"></span><span class="badge-text">1</span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable is-covered aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover" style="height: 202.86px; background-image: url(https://trello-attachments.s3.amazonaws.com/52d409b1b243f27143c880f5/52d40ab0e5bea7f93c353a3c/4c356f6aefaffbf0ec5f1dc67d291441/taco.png_500x414.png); background-color: transparent; background-size: cover;"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers" style="height: 202.86px;"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/IEFiGiEU/4-you-can-attach-pictures-and-files"><span class="card-short-id hide">#4</span>You can attach pictures and files...</a>
+                                        <div class="badges">
+                                            <div title="This card has a description." class="badge badge-state-image-only"><span class="badge-icon icon-sm icon-description"></span>
+                                            </div>
+                                            <div title="Attachments" class="badge"><span class="badge-icon icon-sm icon-attachment"></span><span class="badge-text">1</span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/MQhJeBWJ/5-any-kind-of-hyperlink"><span class="card-short-id hide">#5</span>... any kind of hyperlink ...</a>
+                                        <div class="badges">
+                                            <div title="Comments" class="badge"><span class="badge-icon icon-sm icon-comment"></span><span class="badge-text">1</span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/JUt1Pkx3/6-or-checklists"><span class="card-short-id hide">#6</span>... or checklists.</a>
+                                        <div class="badges">
+                                            <div title="Checklist items" class="badge"><span class="badge-icon icon-sm icon-checklist"></span><span class="badge-text">1/3</span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                            </div><a class="open-card-composer js-open-card-composer" href="#">Add a card…</a>
+                        </div>
+                        <div class="list">
+                            <div class="list-header js-list-header non-empty u-clearfix editable" attr="name">
+                                <h2 class="list-header-name hide-on-edit js-list-name current">Intermediate</h2> 
+                                <p class="list-header-num-cards hide js-num-cards">7 cards</p><span class="list-header-subscribe-icon icon-sm icon-subscribe js-list-subscribed hide"></span>
+                                <div class="edit edit-heavy u-clearfix">
+                                    <textarea class="field single-line" type="text"></textarea>
+                                </div>
+                                <a class="list-header-menu-icon icon-sm icon-dropdown-menu dark-hover js-open-list-menu" href="#"></a>
+                            </div>
+                            <div class="list-cards u-fancy-scrollbar u-clearfix js-list-cards js-sortable ui-sortable">
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/mYxQBjl2/7-invite-your-team-to-this-board-using-the-add-members-button"><span class="card-short-id hide">#7</span>Invite your team to this board using the Add Members button</a>
+                                        <div class="badges"></div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/dRMg45a0/8-drag-people-onto-a-card-to-indicate-that-they-re-responsible-for-it"><span class="card-short-id hide">#8</span>Drag people onto a card to indicate that they're responsible for it.</a>
+                                        <div class="badges"></div>
+                                        <div class="list-card-members js-list-card-members">
+                                            <div class="member js-member-on-card-menu" data-idmem="4e6a7fad05d98b02ba00845c">
+                                                <img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/a6cc37f6849928acb91064cf65e61cbc/30.png" alt="Trello (trello)" title="Trello (trello)"><span class="member-gold-badge" title="This member has Trello Gold."></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"><span class="card-label card-label-green" title="green label (default)">&nbsp;</span><span class="card-label card-label-red" title="red label (default)">&nbsp;</span>
+                                        </div><a class="list-card-title js-card-name" href="/c/znlbim9y/9-use-color-coded-labels-for-organization"><span class="card-short-id hide">#9</span>Use color-coded labels for organization</a>
+                                        <div class="badges"></div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/94m67h7Q/19-you-can-change-the-board-background"><span class="card-short-id hide">#19</span>You can change the board background.</a>
+                                        <div class="badges">
+                                            <div title="This card has a description." class="badge badge-state-image-only"><span class="badge-icon icon-sm icon-description"></span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/65TXL6ZR/10-make-as-many-lists-as-you-need"><span class="card-short-id hide">#10</span>Make as many lists as you need!</a>
+                                        <div class="badges">
+                                            <div title="This card has a description." class="badge badge-state-image-only"><span class="badge-icon icon-sm icon-description"></span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/R9HdpWWv/11-try-dragging-cards-anywhere"><span class="card-short-id hide">#11</span>Try dragging cards anywhere.</a>
+                                        <div class="badges"></div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/WE7MQb3B/12-finished-with-a-card-archive-it"><span class="card-short-id hide">#12</span>Finished with a card? Archive it.</a>
+                                        <div class="badges">
+                                            <div title="This card has a description." class="badge badge-state-image-only"><span class="badge-icon icon-sm icon-description"></span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                            </div><a class="open-card-composer js-open-card-composer" href="#">Add a card…</a>
+                        </div>
+                        <div class="list">
+                            <div class="list-header js-list-header non-empty u-clearfix editable" attr="name">
+                                <h2 class="list-header-name hide-on-edit js-list-name current">Advanced</h2> 
+                                <p class="list-header-num-cards hide js-num-cards">6 cards</p><span class="list-header-subscribe-icon icon-sm icon-subscribe js-list-subscribed hide"></span>
+                                <div class="edit edit-heavy u-clearfix">
+                                    <textarea class="field single-line" type="text"></textarea>
+                                </div>
+                                <a class="list-header-menu-icon icon-sm icon-dropdown-menu dark-hover js-open-list-menu" href="#"></a>
+                            </div>
+                            <div class="list-cards u-fancy-scrollbar u-clearfix js-list-cards js-sortable ui-sortable">
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/VVvz5NcS/13-use-as-many-boards-as-you-want"><span class="card-short-id hide">#13</span>Use as many boards as you want!</a>
+                                        <div class="badges">
+                                            <div title="This card has a description." class="badge badge-state-image-only"><span class="badge-icon icon-sm icon-description"></span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable active-card">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/9gSy8Jzl/17-want-tips-usage-examples-or-api-info"><span class="card-short-id hide">#17</span>Want tips, usage examples, or API info?</a>
+                                        <div class="badges">
+                                            <div title="This card has a description." class="badge badge-state-image-only"><span class="badge-icon icon-sm icon-description"></span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/rguLRdGp/14-want-to-use-keyboard-shortcuts-we-have-them"><span class="card-short-id hide">#14</span>Want to use keyboard shortcuts? We have them!</a>
+                                        <div class="badges">
+                                            <div title="This card has a description." class="badge badge-state-image-only"><span class="badge-icon icon-sm icon-description"></span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/alJ6CRqQ/18-get-the-apps-for-ios-android-and-windows-8"><span class="card-short-id hide">#18</span>Get the apps for iOS, Android, and Windows 8!</a>
+                                        <div class="badges">
+                                            <div title="This card has a description." class="badge badge-state-image-only"><span class="badge-icon icon-sm icon-description"></span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/hfI81VlJ/15-want-updates-on-new-features"><span class="card-short-id hide">#15</span>Want updates on new features?</a>
+                                        <div class="badges">
+                                            <div title="This card has a description." class="badge badge-state-image-only"><span class="badge-icon icon-sm icon-description"></span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                                <div class="list-card js-member-droppable aging-level-3 aging-regular ui-droppable">
+                                    <div class="list-card-cover js-card-cover"></div><span class="icon-sm icon-edit list-card-operation dark-hover js-open-quick-card-editor js-card-menu"></span>
+                                    <div class="list-card-stickers-area hide">
+                                        <div class="stickers js-card-stickers"></div>
+                                    </div>
+                                    <div class="list-card-details">
+                                        <div class="list-card-labels js-card-labels"></div><a class="list-card-title js-card-name" href="/c/z3nN56Za/16-need-help"><span class="card-short-id hide">#16</span>Need help?</a>
+                                        <div class="badges">
+                                            <div title="This card has a description." class="badge badge-state-image-only"><span class="badge-icon icon-sm icon-description"></span>
+                                            </div>
+                                        </div>
+                                        <div class="list-card-members js-list-card-members"></div>
+                                    </div>
+                                    <p class="list-card-dropzone">Drop files to upload.</p>
+                                </div>
+                            </div><a class="open-card-composer js-open-card-composer" href="#">Add a card…</a>
+                        </div>
+                        <div class="list mod-add is-idle">
+                            <form><span class="placeholder js-open-add-list">Add a list…</span>
+                                <input class="list-name-input" type="text" name="name" placeholder="Add a list…" autocomplete="off">
+                                <div class="edit-controls keep u-clearfix">
+                                    <input class="primary confirm js-save-edit" type="submit" value="Save">
+                                    <a class="icon-lg icon-close dark-hover cancel js-cancel-edit" href="#"></a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <noscript class="big-message">&lt;h1&gt;To use Trello, please enable JavaScript.&lt;/h1&gt;</noscript>
+        <div id="boards-drawer">
+            <div class="boards-drawer">
+                <div class="boards-drawer-header">
+                    <h3>Boards</h3>
+                </div>
+                <div class="board-drawer-content u-fancy-scrollbar" style="max-height: 565px;">
+                    <input class="js-search-boards" type="text" placeholder="Find boards by name…">
+                    <div class="js-board-results-container hide">
+                        <ul class="sidebar-boards-list js-board-results"></ul>
+                        <a class="quiet-button js-add-board-with-name" href="#"></a>
+                    </div>
+                    <div class="js-boards-list-container">
+                        <p class="quiet u-text-align-center hide" style="margin: 6px 4px 0 0; padding: 8px 12px;">No Boards</p>
+                        <div class="starred-sidebar-boards-list js-starred-boards">
+                            <div class="hide">
+                                <p class="sidebar-section-header quiet js-sidebar-section-header bold"><span class="icon-sm icon-star"></span><span class="sidebar-section-header-title">Starred Boards</span><span class="icon-sm icon-remove sidebar-section-header-toggle-icon dark-hover js-collapse-section"></span><span class="icon-sm icon-add sidebar-section-header-toggle-icon dark-hover js-expand-section hide"></span>
+                                </p>
+                                <ul class="sidebar-boards-list js-board-list ui-sortable"></ul>
+                            </div>
+                        </div>
+                        <div class="js-recent-boards">
+                            <div>
+                                <p class="sidebar-section-header quiet js-sidebar-section-header bold"><span class="icon-sm icon-clock"></span><span class="sidebar-section-header-title">Recent Boards</span><span class="icon-sm icon-remove sidebar-section-header-toggle-icon dark-hover js-collapse-section"></span><span class="icon-sm icon-add sidebar-section-header-toggle-icon dark-hover js-expand-section hide"></span>
+                                </p>
+                                <ul class="sidebar-boards-list js-board-list">
+                                    <li><a class="js-open-board highlight-icon    unknown" href="/b/37aap9RK/welcome-board" style="  background-color: #0E74AF; "><span class="thumbnail" style=" ; background-color: #0E74AF; "></span><span class="fade"></span><span class="details"><span class="board-list-item-name" title="Welcome Board">Welcome Board</span><span class="unread-indicator js-unread" title="There is new activity on this board."></span><span class="icon-sm icon-star js-star-board" title="Click to star this board. It will show up at top of your boards list."></span></span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="js-all-boards">
+                            <div>
+                                <p class="sidebar-section-header quiet js-sidebar-section-header bold"><span class="icon-sm icon-board"></span><span class="sidebar-section-header-title">My Boards</span><span class="icon-sm icon-remove sidebar-section-header-toggle-icon dark-hover js-collapse-section"></span><span class="icon-sm icon-add sidebar-section-header-toggle-icon dark-hover js-expand-section hide"></span>
+                                </p>
+                                <ul class="sidebar-boards-list js-board-list">
+                                    <li><a class="js-open-board highlight-icon    unknown" href="/b/zYcsPWKC/wbphed" style="  background-color: #0E74AF; "><span class="thumbnail" style=" ; background-color: #0E74AF; "></span><span class="fade"></span><span class="details"><span class="board-list-item-name" title="WBPHED">WBPHED</span><span class="unread-indicator js-unread" title="There is new activity on this board."></span><span class="icon-sm icon-star js-star-board" title="Click to star this board. It will show up at top of your boards list."></span></span></a>
+                                    </li>
+                                    <li><a class="js-open-board highlight-icon    unknown" href="/b/37aap9RK/welcome-board" style="  background-color: #0E74AF; "><span class="thumbnail" style=" ; background-color: #0E74AF; "></span><span class="fade"></span><span class="details"><span class="board-list-item-name" title="Welcome Board">Welcome Board</span><span class="unread-indicator js-unread" title="There is new activity on this board."></span><span class="icon-sm icon-star js-star-board" title="Click to star this board. It will show up at top of your boards list."></span></span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div><a class="quiet-button js-add-board" href="#">Create new board…</a><a class="quiet-button js-pin" href="#">Always keep this menu open.</a><a class="quiet-button hide js-unpin" href="#">Don’t keep this menu open.</a><a class="quiet-button js-open-closed-boards" href="#">See closed boards…</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="window-overlay">
+        <div class="window">
+            <a class="focus-dummy" href="#"></a>
+            <div class="window-wrapper clearfix js-tab-parent"></div>
+        </div>
+    </div>
+    <div class="pop-over">
+        <div class="pop-over-header js-pop-over-header">
+            <a class="pop-over-header-back-btn icon-sm icon-back js-back-view" href="#"></a> <span class="pop-over-header-title js-fill-pop-over-title"></span> 
+            <a class="pop-over-header-close-btn icon-sm icon-close js-close-popover" href="#"></a>
+        </div>
+        <div class="pop-over-content u-fancy-scrollbar js-fill-pop-over-content js-tab-parent"></div>
+    </div>
+    <div class="tooltip-container"></div>
+    <div id="clipboard-container"></div>
+    <div id="staging" style="visibility: hidden; position: absolute; left: 0px; top: -100000px; width: 100%;"></div>
+</body>
+
+</html>
