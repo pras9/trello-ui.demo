@@ -13,27 +13,92 @@
     <div id="app_container">
         <div id="header">
             <button type="button" id="boards_dd" class="btn btn-default" data-toggle="dropdown">Boards</button>
-            <!--<div class="">-->
         </div>
         <div id="body">
-            <div id="board_container">
-                <div class="board-list panel gray-light">
+            <div id="board_container" class="custom-scroll">
+               
+                <div class="board-list panel">
                     <div class="list-header">
-                        <h3>List Title</h3>
+                        List Title
                     </div>
-                    <div class="cards-container">
-                        <div class="card"></div>
+                    <div class="cards-container custom-scroll">
+                        <div class="card">This is the first card of this application</div>
+                        <div class="card">This is the second card of this application</div>
+                        <div class="card">This is the third card of this application</div>
+                        <div class="card">This is the fourth card of this application</div>
                     </div>
                     <div class="list-footer">
                         <a href="">Add a card</a>
                     </div>
                 </div>
+                
+                <div class="board-list panel">
+                    <div class="list-header">
+                        List Title
+                    </div>
+                    <div class="cards-container custom-scroll">
+                        <div class="card">This is the first card of this application</div>
+                        <div class="card">This is the second card of this application</div>
+                        <div class="card">This is the third card of this application</div>
+                        <div class="card">This is the fourth card of this application</div>
+                    </div>
+                    <div class="list-footer">
+                        <a href="">Add a card</a>
+                    </div>
+                </div>
+                
+                <div class="board-list panel">
+                    <div class="list-header">
+                        List Title
+                    </div>
+                    <div class="cards-container custom-scroll">
+                        <div class="card">This is the first card of this application</div>
+                        <div class="card">This is the second card of this application</div>
+                        <div class="card">This is the third card of this application</div>
+                        <div class="card">This is the fourth card of this application</div>
+                    </div>
+                    <div class="list-footer">
+                        <a href="">Add a card</a>
+                    </div>
+                </div>
+                
+                <div class="board-list panel">
+                    <div class="list-header">
+                        List Title
+                    </div>
+                    <div class="cards-container custom-scroll">
+                        <div class="card">This is the first card of this application</div>
+                        <div class="card">This is the second card of this application</div>
+                        <div class="card">This is the third card of this application</div>
+                        <div class="card">This is the fourth card of this application</div>
+                    </div>
+                    <div class="list-footer">
+                        <a href="">Add a card</a>
+                    </div>
+                </div>
+                
             </div>
             <div id="right_nav"></div>
         </div>
     </div>
     <script src="scripts/jquery-2.1.4.js"></script>
     <script src="scripts/bootstrap.js"></script>
+    <script>
+        $(document).ready(function() {
+            function resizeAll() {
+                $('body').css({
+                    'height': $(window).height(),
+                    'width': $(window).width()
+                });
+                $('#body').css({
+                    'height': (parseInt($(window).height()) - 40) + 'px'
+                });
+            }
+            $(window).resize(resizeAll);
+            
+            resizeAll();
+        });
+    </script>
 </body>
 
 </html>

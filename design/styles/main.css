@@ -1,6 +1,5 @@
 @import url(bootstrap.min.css);
-
-#boards_dd {
+ #boards_dd {
     background-color: #777;
     border-color: #777;
     color: #fff;
@@ -10,16 +9,92 @@
 }
 #board_container {
     padding: 5px 10px;
-    margin: 2px 10px;
-    border: 1px solid;
+    margin: 0 10px 5px;
+    height: inherit;
+    overflow: auto;
 }
 .board-list {
     width: 300px;
-    margin-right: 10px
+    margin-right: 10px;
+    display: inline-block;
+    background-color: #C0C0C4;
+    position: relative;
+    top: 0px;
+    bottom: 0px;
 }
-
 #header {
-    background: #000;      
-    height: 40px;      
-    overflow: hidden;      padding: 5px;      position: relative;      z-index: 10;
+    background: #45454A;
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    padding: 5px;
+    position: relative;
+    z-index: 10;
+}
+#body {
+    width: 100%;
+    display: block;
+    overflow: hidden;
+}
+.list-header {
+    margin: 8px 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.cards-container {
+    display: block;
+    overflow: auto;
+}
+#app_container {
+    height: inherit;
+    width: inherit;
+    display: block;    
+    flex-flow: column;
+    /* overflow: hidden; */
+}
+body {
+    background-color: #313135;
+}
+.card {
+    background-color: #F4F4F5;
+    margin: 1px 10px 8px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    box-shadow: 0px 2px 1px #999;
+    min-height: 40px;
+}
+.custom-scroll {
+    -webkit-overflow-scrolling: touch;
+    -webkit-transform: translate3d(0, 0, 0)
+}
+.custom-scroll::-webkit-scrollbar {
+    height: 9px;
+    width: 9px
+}
+.custom-scroll::-webkit-scrollbar-button:end:increment,
+.custom-scroll::-webkit-scrollbar-button:start:decrement {
+    background: 0 0;
+    display: none
+}
+.custom-scroll::-webkit-scrollbar-track-piece {
+    background: #d6dadc
+}
+.custom-scroll::-webkit-scrollbar-track-piece:vertical:start {
+    border-radius: 5px 5px 0 0
+}
+.custom-scroll::-webkit-scrollbar-track-piece:vertical:end {
+    border-radius: 0 0 5px 5px
+}
+.custom-scroll::-webkit-scrollbar-track-piece:horizontal:start {
+    border-radius: 5px 0 0 5px
+}
+.custom-scroll::-webkit-scrollbar-track-piece:horizontal:end {
+    border-radius: 0 5px 5px 0
+}
+.custom-scroll::-webkit-scrollbar-thumb:horizontal,
+.custom-scroll::-webkit-scrollbar-thumb:vertical {
+    background: #c4c9cc;
+    border-radius: 5px;
+    display: block;
+    height: 50px
 }
