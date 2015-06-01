@@ -1,6 +1,5 @@
 @import url(bootstrap.min.css);
 @import url(font-awesome.min.css);
-
  #boards_dd {
     background-color: #777;
     border-color: #777;
@@ -14,22 +13,44 @@
     margin: 0 10px 5px 10px;
     overflow-x: auto;
     overflow-y: hidden;
-    -webkit-box-align: start;    -webkit-align-items: flex-start;    -ms-flex-align: start;    align-items: flex-start;    display: -webkit-box;    display: -webkit-flex;    display: -ms-flexbox;    display: flex;    -webkit-box-orient: horizontal;    -webkit-box-direction: normal;    -webkit-flex-direction: row;    -ms-flex-direction: row;    flex-direction: row;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
 }
 .list-container {
     padding: 8px;
     margin-right: 10px;
     max-height: 100%;
-    box-sizing: border-box;    display: -webkit-box;    display: -webkit-flex;    display: -ms-flexbox;    display: flex;    -webkit-box-orient: vertical;    -webkit-box-direction: normal;    -webkit-flex-direction: column;    -ms-flex-direction: column;    flex-direction: column;    -webkit-box-flex: 0;    
-    -webkit-flex: 0 0 316px;    
-    -ms-flex: 0 0 316px;    
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 316px;
+    -ms-flex: 0 0 316px;
     flex: 0 0 316px;
 }
 .list {
     width: 300px;
     display: block;
     background-color: #C0C0C4;
-    margin: 0px !important;    
+    margin: 0px !important;
     overflow: hidden;
 }
 #header {
@@ -49,17 +70,29 @@
 .list-header {
     font-size: 16px;
     font-weight: bold;
-    cursor: -webkit-grab;    cursor: -moz-grab;    cursor: grab;
-    -webkit-box-flex: 0;    -webkit-flex: 0 0 auto;    -ms-flex: 0 0 auto;    flex: 0 0 auto;    padding: 8px 34px 8px 10px;    position: relative;    
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    padding: 8px 34px 8px 10px;
+    position: relative;
     min-height: 20px;
 }
 .cards-container {
-    -webkit-box-flex: 1;    -webkit-flex: 1 1 auto;    -ms-flex: 1 1 auto;    flex: 1 1 auto;    overflow-y: auto;    overflow-x: hidden;            
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 #app_container {
     height: 100%;
     width: 100%;
-    display: block;    
+    display: block;
     overflow: hidden;
 }
 body {
@@ -108,8 +141,10 @@ body {
     display: block;
     height: 50px
 }
-
 .list-footer {
-    -webkit-box-flex: 0;    -webkit-flex: 0 0 auto;    -ms-flex: 0 0 auto;    flex: 0 0 auto;    
-    padding: 5px 10px;                        
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    padding: 5px 10px;
 }
