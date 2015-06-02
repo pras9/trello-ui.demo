@@ -13,6 +13,25 @@
             <button type="button" id="boards_dd" class="btn btn-default" data-toggle="dropdown">Boards</button>
         </div>
         <div id="body">
+            <div class="board-header">
+                <div class="board-title">Board Name</div>
+            </div>
+            
+            <div id="activity_menu_container">
+                <div id="hide_activity_menu"><i class="fa fa-arrow-right"></i></div>
+                <div class="menu-header">Menu</div>
+                <div class="activities">
+                    <div class="activity">
+                        <a href="javascript:void" class="user-avatar"></a>
+                        <span class="action-log">Added a list 'Advanced'</span>
+                    </div>
+                    
+                </div>
+            </div>
+            <a href="javascript:void(0);" id="show_activity_menu">
+                <i class="fa fa-arrow-left"></i>
+                <span>Show menu</span>
+            </a>
             <div id="board_lists_container" class="custom-scroll">
                
                 <div class="list-container droppable">
@@ -51,7 +70,7 @@
                             <div class="card">This is the fourth card of this application</div>
                         </div>
                         <div class="list-footer">
-                            <a href="">Add a card</a>
+                            <a href="">Add a card ...</a>
                         </div>
                     </div>
                 </div>
@@ -68,11 +87,11 @@
                             <div class="card">This is the fourth card of this application</div>
                         </div>
                         <div class="list-footer">
-                            <a href="">Add a card</a>
+                            <a href="">Add a card ...</a>
                         </div>
                     </div>
                 </div>
-               
+                
                 <div class="list-container droppable">
                     <div class="list panel">
                         <div class="list-header">
@@ -85,11 +104,11 @@
                             <div class="card">This is the fourth card of this application</div>
                         </div>
                         <div class="list-footer">
-                            <a href="">Add a card</a>
+                            <a href="">Add a card ...</a>
                         </div>
                     </div>
                 </div>
-               
+                
                 <div class="list-container droppable">
                     <div class="list panel">
                         <div class="list-header">
@@ -102,11 +121,11 @@
                             <div class="card">This is the fourth card of this application</div>
                         </div>
                         <div class="list-footer">
-                            <a href="">Add a card</a>
+                            <a href="">Add a card ...</a>
                         </div>
                     </div>
                 </div>
-               
+                
                 <div class="list-container droppable">
                     <div class="list panel">
                         <div class="list-header">
@@ -119,42 +138,14 @@
                             <div class="card">This is the fourth card of this application</div>
                         </div>
                         <div class="list-footer">
-                            <a href="">Add a card</a>
+                            <a href="">Add a card ...</a>
                         </div>
                     </div>
                 </div>
                
-                <div class="list-container droppable">
-                    <div class="list panel">
-                        <div class="list-header">
-                            List Title
-                        </div>
-                        <div class="cards-container custom-scroll">
-                            <div class="card">This is the first card of this application</div>
-                            <div class="card">This is the second card of this application</div>
-                            <div class="card">This is the third card of this application</div>
-                            <div class="card">This is the fourth card of this application</div>
-                        </div>
-                        <div class="list-footer">
-                            <a href="">Add a card</a>
-                        </div>
-                    </div>
-                </div>
-               
-                <div class="list-container droppable">
-                    <div class="list panel">
-                        <div class="list-header">
-                            List Title
-                        </div>
-                        <div class="cards-container custom-scroll">
-                            <div class="card">This is the first card of this application</div>
-                            <div class="card">This is the second card of this application</div>
-                            <div class="card">This is the third card of this application</div>
-                            <div class="card">This is the fourth card of this application</div>
-                        </div>
-                        <div class="list-footer">
-                            <a href="">Add a card</a>
-                        </div>
+                <div class="list-container new-list">
+                    <div class="list-adder">
+                        <a href="" id="add_new_list">Add a list ...</a>
                     </div>
                 </div>
                 
@@ -163,6 +154,7 @@
         </div>
     </div>
     <script src="scripts/jquery-2.1.4.js"></script>
+    <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/bootstrap.js"></script>
     <script>
         $(document).ready(function() {
@@ -175,13 +167,28 @@
                     'height': (parseInt($(window).height()) - 40) + 'px'
                 });
                 $('#board_lists_container').css({
-                    'height': (parseInt($(window).height()) - 45) + 'px'
+                    'height': (parseInt($(window).height()) - 105) + 'px'
+                });
+                $('.cards-container').css({
+                    'max-height': parseInt($('#board_lists_container').css('height')) - 
+                                    ( parseInt($('.list-header:first').css('height')) 
+                                        + parseInt($('.list-footer:first').css('height')) + 60 ) + 'px'
                 });
                 
             }
             $(window).resize(resizeAll);
+            $('#show_activity_menu').click(function() {
+                $('#activity_menu_container').show("slide", { direction: "right" }, 600);
+            });
+            $('#hide_activity_menu').click(function() {
+                $('#activity_menu_container').hide("slide", { direction: "right" }, 600);
+            });
+            
             
             resizeAll();
+            
+            
+            
         });
     </script>
 </body>

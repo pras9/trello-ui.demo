@@ -1,6 +1,20 @@
 @import url(bootstrap.min.css);
 @import url(font-awesome.min.css);
- #boards_dd {
+@import url(jquery-ui.min.css);
+
+body {
+    background-color: #313135;
+    color: #ebebeb;
+}
+a {
+    color: #222222;
+    text-decoration: none;
+}
+a:hover {
+    color: #555555;
+    text-decoration: none;
+}
+#boards_dd {
     background-color: #777;
     border-color: #777;
     color: #fff;
@@ -29,7 +43,7 @@
 }
 .list-container {
     padding: 8px;
-    margin-right: 10px;
+    margin-right: 5px;
     max-height: 100%;
     box-sizing: border-box;
     display: -webkit-box;
@@ -46,6 +60,8 @@
     -ms-flex: 0 0 316px;
     flex: 0 0 316px;
 }
+.list-container.new-list {
+}
 .list {
     width: 300px;
     display: block;
@@ -56,7 +72,7 @@
 #header {
     background: #45454A;
     width: 100%;
-    height: 40px;
+    height: 30px;
     overflow: hidden;
     padding: 5px;
     position: relative;
@@ -66,6 +82,7 @@
     width: 100%;
     display: block;
     overflow: hidden;
+    position: relative;
 }
 .list-header {
     font-size: 16px;
@@ -77,9 +94,10 @@
     -webkit-flex: 0 0 auto;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
-    padding: 8px 34px 8px 10px;
+    padding: 8px 10px;
     position: relative;
     min-height: 20px;
+    color: #333333;
 }
 .cards-container {
     -webkit-box-flex: 1;
@@ -95,9 +113,6 @@
     display: block;
     overflow: hidden;
 }
-body {
-    background-color: #313135;
-}
 .card {
     background-color: #F4F4F5;
     margin: 1px 10px 8px;
@@ -105,6 +120,7 @@ body {
     border-radius: 3px;
     box-shadow: 0px 2px 1px #999;
     min-height: 40px;
+    color: #333;
 }
 .custom-scroll {
     -webkit-overflow-scrolling: touch;
@@ -136,7 +152,7 @@ body {
 }
 .custom-scroll::-webkit-scrollbar-thumb:horizontal,
 .custom-scroll::-webkit-scrollbar-thumb:vertical {
-    background: #c4c9cc;
+    background: #45454A;
     border-radius: 5px;
     display: block;
     height: 50px
@@ -147,4 +163,87 @@ body {
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     padding: 5px 10px;
+}
+
+.list-adder {
+    width: 300px;    display: block;    
+    padding: 8px 10px;
+    border-radius: 5px;
+    background-color: #45454A;
+    cursor: pointer;
+}
+.list-adder a {
+    color: #C0C0C4;
+}
+.list-adder:hover {
+    background-color: #707070;
+}
+
+
+.board-header {
+    height: 30px;
+    padding: 2px 28px;
+    margin-top: 10px;
+}
+
+.board-title {
+    margin: 2px 10px 0 0;
+    font-size: 18px;
+}
+
+#activity_menu_container {
+    height: 100%;
+    width: 250px;
+    background-color: #C0C0C4;
+    position: fixed;
+    top: 40px;
+    right: 0px;
+    z-index: 1;
+    border-radius: 5px 0 0 0;
+    display: block;
+}
+
+#show_activity_menu {
+    position: absolute;
+    right: 30px;
+    top: 13px;
+    color: #ebebeb;
+    padding: 5px 10px 5px 8px;
+    border-radius: 5px;
+}
+#show_activity_menu:hover{
+    background-color: #45454A;
+}
+#show_activity_menu > span {
+    text-decoration: underline;
+    margin-left: 8px;
+}
+
+#hide_activity_menu {
+    background-color: inherit;
+    color: #222;
+    width: 30px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 5px 0 0 5px;
+    position: absolute;
+    left: -30px;
+    top: 10px;
+    cursor: pointer;
+}
+#hide_activity_menu:hover {
+    background-color: #777;
+}
+
+.menu-header {
+    background-color: #999999;
+    margin: 4px 8px;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 16px;
+}
+
+.activities {
+    margin: 10px;
 }
