@@ -1,0 +1,20 @@
+    <script type="text/template" id="menu_view">
+        <div id="hide_activity_menu"><i class="fa fa-arrow-right"></i></div>
+        <div id="activity_menu_container" class="custom-scroll">
+            <div class="menu-header">Menu</div>
+            <div class="activities">
+                <h4>Activity</h4>
+                <% 
+                    if(activities != null && activities.length > 0) {
+                        for(var i = 0; i < activities.length; i++) {
+                            print(activities[i]);
+                        }
+                    }
+                %>
+            </div>
+        </div>
+        <a href="javascript:void(0);" id="show_activity_menu">
+            <i class="fa fa-arrow-left"></i>
+            <span>Show menu</span>
+        </a>
+    </script>

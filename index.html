@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Manage Your Idea</title>
+    <link href="styles/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="styles/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="styles/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="styles/css/main.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app_container">
+        <div id="header">
+            <button type="button" id="boards_dd" class="btn btn-default" data-toggle="dropdown">Boards</button>
+        </div>
+        <div id="body"></div>
+    </div>
+
+    <script type="text/template" id="activity_view">
+        <div class="activity">
+            <a href="javascript:void" class="user-avatar"><img src="images/anonymous-45x45.jpg" alt="anonymous" /></a>
+            <div class="action-log">
+                <span class="log-body">
+                    <a href="javascript:void(0);">Anonymous</a> Added a list 'List Title'
+                </span>
+                <span class="log-time">June 7 at 8:30 P.M.</span>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="board_view">
+        <div id="board_container">
+            <%= menu_view %>
+            <div class="board-header">
+                <div class="board-title"><%= board_title %></div>
+            </div>
+            <%= board_lists_view %>
+        </div>
+    </script>
+    <script type="text/template" id="card_list_view">
+        <div class="list-container droppable">
+            <div class="list panel">
+                <div class="list-header">
+                    <%= list_header %>
+                </div>
+                <div class="cards-container custom-scroll">
+                    <% 
+                        if(cards != null && cards.length > 0) {
+                            for(var i = 0; i < cards.length; i++) {
+                    %>
+                    <div class="card <%= (cards[i].active) ? '' : 'inactive' %>"><%= cards[i].detail %></div>
+                    %>
+                            }
+                        }
+                    %>
+                    <div class="card">This is the first card of this application</div>
+                    <div class="card">This is the second card of this application</div>
+                    <div class="card inactive">This is the third card of this application</div>
+                    <div class="card inactive">This is the fourth card of this application</div>
+                </div>
+                <div class="list-footer">
+                    <a href="javascript:void(0);" class="add-new_card">Add a card ...</a>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="lists_view">
+        <div id="lists_container" class="custom-scroll">
+            <% 
+                if(card_lists != null && card_lists.length > 0) {
+                    for(var i = 0; i < card_lists.length; i++) {
+                        print(card_lists[i]);
+                    }
+                }
+            %>
+
+            <div class="list-container new-list">
+                <div class="list-adder">
+                    <a href="javascript:void(0);" id="add_new_list">Add a list ...</a>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="menu_view">
+        <div id="hide_activity_menu"><i class="fa fa-arrow-right"></i></div>
+        <div id="activity_menu_container" class="custom-scroll">
+            <div class="menu-header">Menu</div>
+            <div class="activities">
+                <h4>Activity</h4>
+                <% 
+                    if(activities != null && activities.length > 0) {
+                        for(var i = 0; i < activities.length; i++) {
+                            print(activities[i]);
+                        }
+                    }
+                %>
+            </div>
+        </div>
+        <a href="javascript:void(0);" id="show_activity_menu">
+            <i class="fa fa-arrow-left"></i>
+            <span>Show menu</span>
+        </a>
+    </script>
+    <script src="scripts/vendor.bundle.js"></script>
+    <script src="scripts/app.bundle.js"></script>
+</body>
+
+</html>

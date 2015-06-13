@@ -1,0 +1,17 @@
+    <script type="text/template" id="lists_view">
+        <div id="lists_container" class="custom-scroll">
+            <% 
+                if(card_lists != null && card_lists.length > 0) {
+                    for(var i = 0; i < card_lists.length; i++) {
+                        print(card_lists[i]);
+                    }
+                }
+            %>
+
+            <div class="list-container new-list">
+                <div class="list-adder">
+                    <a href="javascript:void(0);" id="add_new_list">Add a list ...</a>
+                </div>
+            </div>
+        </div>
+    </script>

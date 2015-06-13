@@ -23,7 +23,7 @@ a:hover {
     height: 30px;
     line-height: 17px;
 }
-#board_lists_container {
+#lists_container {
     padding: 5px 10px;
     margin: 0 10px 5px 10px;
     overflow-x: auto;

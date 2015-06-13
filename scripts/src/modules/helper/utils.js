@@ -6,26 +6,15 @@ var utils = (function(global, doc, $, _) {
     var utils = {};
 
     /**
-     * Loads given partial template and return it with data filled
+     * Loads given partial template and return it as string with data filled
      *
      * @param template
      * @param data
      * @return {*}
      */
-    utils.loadTemplate = function(template, data) {
-        var template_str = "";
-
-        $.ajax({
-            type: 'GET',
-            url: APP_PATH.TEMPLATES + '/' + template,
-            dataType: 'text',
-            async: false,
-            success: function(html) {
-                template_str = html;
-            }
-        });
-
-        template = _.template(template_str);
+    utils.loadTemplate = function(templateName, data) {
+        var template_str = $('script#' + templateName + '_view').html(),
+            template = _.template(template_str, { 'imports': { 'jq': $ } });
         return template(data);
     };
 
@@ -47,12 +36,12 @@ var utils = (function(global, doc, $, _) {
     };
 
     /**
-     * To get the class from give type string
+     * To get the class name from a given string
      *
      * @param str
      * @return {Object}
      */
-    utils.type2ClassName = function(str) {
+    utils.str2ClassName = function(str) {
         var retStr = "", strArr = str.split('_'), i = 0;
         for(i = 0; i < strArr.length; i++) {
             retStr += strArr[i].charAt(0).toUpperCase() + strArr[i].slice(1);
@@ -62,36 +51,18 @@ var utils = (function(global, doc, $, _) {
     };
 
     /**
-     * To get the class from give type string
+     * To get the class from a given string as name of the class
      *
      * @param str
      * @return {Object}
      */
-    utils.type2Class = function(str) {
-        var className = this.type2ClassName(str);
+    utils.str2Class = function(str) {
+        var className = this.str2ClassName(str);
         if(!global.hasOwnProperty(className)) {
             throw new Error("Class " + className + " does not exists!");
         }
         return eval(className);
     };
-
-    /**
-     * Trims the CDATA out of given string(/html) from xml
-     *
-     * @param str
-     * @return {*}
-     */
-    utils.trimCData = function(str) {
-        if(str != null) {
-            str = str.replace('<![CDATA[', '');
-            str = str.replace(']]>', '');
-            str = str.replace(']]&gt', '');
-        }
-        else {
-            str = '';
-        }
-        return str;
-    }
 
     return utils;
 
