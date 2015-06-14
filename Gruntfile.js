@@ -12,8 +12,6 @@ module.exports = function(grunt) {
                 },
                 src: [
                     'scripts/src/config/*.js',
-                    'scripts/src/modules/builder/*.js',
-                    'scripts/src/modules/handler/*.js',
                     'scripts/src/modules/helper/*.js',
                     'scripts/src/modules/provider/*.js',
                     'scripts/src/modules/*.js',
@@ -28,8 +26,7 @@ module.exports = function(grunt) {
                 src: [
                     'scripts/vendor/jquery-2.1.4.min.js',
                     'scripts/vendor/jquery-ui.min.js',
-                    'scripts/vendor/bootstrap.min.js',
-                    'scripts/vendor/loadash.min.js'
+                    'scripts/vendor/bootstrap.min.js'
                 ],
                 dest: 'scripts/vendor.bundle.js'
             },

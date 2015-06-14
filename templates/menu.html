@@ -5,11 +5,23 @@
             <div class="activities">
                 <h4>Activity</h4>
                 <% 
-                    if(activities != null && activities.length > 0) {
-                        for(var i = 0; i < activities.length; i++) {
-                            print(activities[i]);
-                        }
+                if(activities != null && activities.length > 0) {
+                    for(var i = 0; i < activities.length; i++) {
+                %>
+                <div class="activity">
+                    <a href="javascript:void" class="user-avatar">
+                        <img src="<%= activities[i].avatar %>" alt="anonymous" />
+                    </a>
+                    <div class="action-log">
+                        <span class="log-body">
+                            <a href="javascript:void(0);"><%= activities[i].userName %></a> <%= activities[i].actionText %>
+                        </span>
+                        <span class="log-time"><%= activities[i].timestamp %></span>
+                    </div>
+                </div>
+                <%
                     }
+                }
                 %>
             </div>
         </div>

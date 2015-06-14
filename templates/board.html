@@ -1,9 +1,13 @@
     <script type="text/template" id="board_view">
-        <div id="board_container">
-            <%= menu_view %>
-            <div class="board-header">
-                <div class="board-title"><%= board_title %></div>
+        <div class="board-header">
+            <div class="board-title"><%= board_title %></div>
+        </div>
+        <div id="lists_container" class="custom-scroll">
+
+            <div class="list-container new-list">
+                <div class="list-adder">
+                    <a href="javascript:void(0);" id="add_new_list">Add a list ...</a>
+                </div>
             </div>
-            <%= board_lists_view %>
         </div>
     </script>

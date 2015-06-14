@@ -1,7 +1,7 @@
 /**
  * The utils object
  */
-var utils = (function(global, doc, $, _) {
+var utils = (function(global, doc, $) {
     'use strict';
     var utils = {};
 
@@ -66,4 +66,4 @@ var utils = (function(global, doc, $, _) {
 
     return utils;
 
-})(window, document, jQuery, _);
+})(window, document, jQuery);

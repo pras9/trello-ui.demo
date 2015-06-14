@@ -1,9 +1,14 @@
-;
+APP_CONST = {
+    'DATA_PATH': 'data',
+    'API_BOARD': 'data/board.json',
+    'API_LISTS': 'data/lists.json',
+    'API_USER': 'data/user.json'
+};;
 
 /**
  * The utils object
  */
-var utils = (function(global, doc, $, _) {
+var utils = (function(global, doc, $) {
     'use strict';
     var utils = {};
 
@@ -68,7 +73,7 @@ var utils = (function(global, doc, $, _) {
 
     return utils;
 
-})(window, document, jQuery, _);
+})(window, document, jQuery);
 ;
 
 ;
@@ -77,8 +82,95 @@ var utils = (function(global, doc, $, _) {
 
 ;
 
-;
+var Provider = Provider || {};
 
+/**
+ * Class Service
+ */
+Provider.Service = (function(global, doc, $) {
+    'use strict';
+
+    /**
+     * @constructor
+     */
+    function Service() {
+        this.CLASS_NAME = 'Service';
+    }
+
+    Service.prototype.getBoardDetail = function(boardId) {
+        var boardDetail = {}, toRet = {};
+        $.ajax({
+            type: 'GET',
+            url: APP_CONST.API_BOARD,
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+                boardDetail = data;
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
+        toRet = _.filter(boardDetail, function(e) {
+            return e.id === boardId;
+        });
+
+        return toRet;
+    };
+
+    Service.prototype.getBoardLists = function(boardId) {
+        var boardLists = {}, toRet = {};
+        $.ajax({
+            type: 'GET',
+            url: APP_CONST.API_LISTS,
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+                boardLists = data;
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
+        toRet = _.filter(boardLists, function(e) {
+            return e.boardId === boardId;
+        });
+
+        return toRet;
+    };
+
+    Service.prototype.getCards = function(listId) {
+        var boardLists = {}, toRet = {};
+        $.ajax({
+            type: 'GET',
+            url: APP_CONST.API_LISTS,
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+                boardLists = data;
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
+        toRet = _.filter(boardLists, function(e) {
+            return e.id === listId;
+        });
+
+        return toRet[0].cards;
+    };
+
+    Service.prototype.getMenuActivities = function() {
+        return {};
+    };
+
+    return Service;
+
+})(window, document, jQuery);;
+
+/**
+ * Class Board
+ */
 var Board = (function(global, doc, $) {
     'use strict';
 
@@ -87,87 +179,164 @@ var Board = (function(global, doc, $) {
      */
     function Board() {
         this.CLASS_NAME = 'Board';
-        this.container = '#body';
-        this.template = 'board'
+        this.container = '#board_container';
+        this.template = 'board';
+        this.list = new List();
+        this.boardId = 1;
     }
+
+    Board.prototype.bindEvents = function() {
+
+    };
+
+    Board.prototype.buildUi = function() {
+        var that = this, cardLists = [];
+
+        this.boardData = app.service.getBoardDetail(this.boardId);
+        this.listsData = app.service.getBoardLists(this.boardId);
+
+        $(this.container).html(utils.loadTemplate(that.template, {
+            'board_title': that.boardData.name
+        }));
+        $.each(this.listsData, function(i, e) {
+            that.list.buildUi(e);
+        });
+
+        this.bindEvents();
+    };
 
     /**
      * The init method of the class
      */
-    Board.prototype.init = function() {
-
+    Board.prototype.init = function(boardId) {
+        this.boardId = (boardId != null) ? boardId : this.boardId;
+        app.boardId = this.boardId;
+        this.buildUi();
+        this.bindEvents();
     };
 
     return Board;
 
 })(window, document, jQuery);;
 
-var Board = (function(global, doc, $) {
+;
+
+var List = (function(global, doc, $) {
     'use strict';
 
     /**
      * @constructor
      */
-    function Board() {
-        this.CLASS_NAME = 'Board';
-        this.container = '#body';
-        this.template = 'board'
+    function List() {
+        this.CLASS_NAME = 'List';
+        this.template = 'card_list';
+        this.beforeElement = '.new-list';
+        this.data = null;
     }
+
+    List.prototype.bindEvents = function() {
+    };
+
+    List.prototype.buildUi = function(data) {
+        var that = this;
+        if(data != null) {
+            this.data = data;
+        }
+        if(this.data == null) {
+            throw new Error('Cannot build ui for null list');
+        }
+
+        this.cardsData = app.service.getCards(this.data.id);
+        $(this.beforeElement).before(
+            utils.loadTemplate(that.template, that.cardsData)
+        );
+    };
+
+    List.prototype.add = function() {
+    };
+
+    List.prototype.rename = function() {
+    };
+
+    List.prototype.archive = function() {
+    };
 
     /**
      * The init method of the class
      */
-    Board.prototype.init = function() {
-
+    List.prototype.init = function(data) {
+        if(data == null) {
+            throw new Error('List cannot be initialized null');
+        }
+        this.data = data;
+        this.buildUi();
+        this.bindEvents();
     };
 
-    return Board;
+    return List;
 
 })(window, document, jQuery);;
 
-var Board = (function(global, doc, $) {
+/**
+ * Class Menu
+ */
+var Menu = (function(global, doc, $) {
     'use strict';
 
     /**
      * @constructor
      */
-    function Board() {
-        this.CLASS_NAME = 'Board';
-        this.container = '#body';
-        this.template = 'board'
+    function Menu() {
+        this.CLASS_NAME = 'Menu';
+        this.container = '#menu_container';
+        this.template = 'menu';
+        this.showMenuBtn = '#show_activity_menu';
+        this.hideMenuBtn = '#hide_activity_menu';
+        this.menuInnerContainer = '#activity_menu_container';
     }
+
+    /**
+     * Bind events
+     */
+    Menu.prototype.bindEvents = function() {
+        var that = this;
+
+        $(this.showMenuBtn).click(function() {
+            setTimeout(function() {
+                $(that.hideMenuBtn).show();
+            }, 700);
+            $(that.menuInnerContainer).show("slide", { direction: "right" }, 600);
+        });
+        $(this.hideMenuBtn).click(function() {
+            $(this).hide();
+            $(that.menuInnerContainer).hide("slide", { direction: "right" }, 600);
+        });
+    };
+
+    /**
+     * Loads the template and builds the UI of Menu
+     */
+    Menu.prototype.buildUi = function() {
+        var that = this;
+
+        this.menuActivities = app.service.getMenuActivities(app.boardId);
+
+        $(this.container).html(utils.loadTemplate(that.template, {
+            'activities': that.menuActivities
+        }));
+
+        this.bindEvents();
+    };
 
     /**
      * The init method of the class
      */
-    Board.prototype.init = function() {
-
+    Menu.prototype.init = function() {
+        this.buildUi();
+        this.bindEvents();
     };
 
-    return Board;
-
-})(window, document, jQuery);;
-
-var Board = (function(global, doc, $) {
-    'use strict';
-
-    /**
-     * @constructor
-     */
-    function Board() {
-        this.CLASS_NAME = 'Board';
-        this.container = '#body';
-        this.template = 'board'
-    }
-
-    /**
-     * The init method of the class
-     */
-    Board.prototype.init = function() {
-
-    };
-
-    return Board;
+    return Menu;
 
 })(window, document, jQuery);;
 
@@ -176,12 +345,33 @@ var Board = (function(global, doc, $) {
  */
 var app = (function(global, doc, $) {
     'use strict';
-    var app = {};
+    var app = {
+        'boardId': 1,
+        'service': new Provider.Service()
+    };
 
     /**
-     * The init method of the application
+     * Resize all method for ui to bind on window resize.
      */
-    app.init = function(simId) {
+    app.resizeAll = function() {
+        $('body').css({
+            'height': $(window).height(),
+            'width': '100%'
+        });
+        $('#body').css({
+            'height': (parseInt($(window).height()) - 40) + 'px'
+        });
+        $('#activity_menu_container').css({
+            'height': (parseInt($(window).height()) - 40) + 'px'
+        });
+        $('#lists_container').css({
+            'height': (parseInt($(window).height()) - 105) + 'px'
+        });
+        $('.cards-container').css({
+            'max-height': parseInt($('#lists_container').css('height')) -
+            ( parseInt($('.list-header:first').css('height'))
+            + parseInt($('.list-footer:first').css('height')) + 60 ) + 'px'
+        });
     };
 
     /**
@@ -190,7 +380,7 @@ var app = (function(global, doc, $) {
      * @return {string}
      */
     app.getHash = function() {
-        return window.location.hash.replace('#', "");
+        return global.location.hash.replace('#', "");
     };
 
     /**
@@ -199,7 +389,20 @@ var app = (function(global, doc, $) {
      * @param hash
      */
     app.updateHash = function(hash) {
-        window.location.hash = '#' + hash;
+        global.location.hash = '#' + hash;
+    };
+
+    /**
+     * The init method of the application
+     */
+    app.init = function(simId) {
+        this.board = new Board();
+        this.board.init();
+        this.menu = new Menu();
+        this.menu.init();
+
+        $(global).resize(app.resizeAll);
+        this.resizeAll();
     };
 
     return app;

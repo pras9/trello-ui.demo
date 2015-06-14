@@ -9,7 +9,7 @@
                         if(cards != null && cards.length > 0) {
                             for(var i = 0; i < cards.length; i++) {
                     %>
-                    <div class="card <%= (cards[i].active) ? '' : 'inactive' %>"><%= cards[i].detail %></div>
+                    <div class="card <%= (cards[i].status == 1) ? '' : 'inactive' %>"><%= cards[i].detail %></div>
                     %>
                             }
                         }

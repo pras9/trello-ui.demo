@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "name": "Stage A - Design & Planning",
+    "created": "1434307807316",
+    "owner": 1,
+    "boardId": 1,
+    "order": 1,
+    "status": 1,
+    "cards": [
+      {
+        "id": 1,
+        "detail": "This is the first card of List A",
+        "created": "1434307807316",
+        "status": 0
+      },
+      {
+        "id": 2,
+        "detail": "Started the planning the ui, and started the design",
+        "created": "1434309921803",
+        "status": 0
+      },
+      {
+        "id": 3,
+        "detail": "Working on the design part of the board area",
+        "created": "1434310153568",
+        "status": 0
+      },
+      {
+        "id": 4,
+        "detail": "Working on the design part of the board area",
+        "created": "1434310169934",
+        "status": 0
+      },
+      {
+        "id": 5,
+        "detail": "Design part of the board is completed, started working on the menu design and effects.",
+        "created": "1434310256650",
+        "status": 0
+      },
+      {
+        "id": 6,
+        "detail": "Basic designing of board, menu completed, started working on the cards and lists designing",
+        "created": "1434310178630",
+        "status": 0
+      },
+      {
+        "id": 7,
+        "detail": "Basic designing of menu, cards, lists and board container",
+        "created": "1434310310984",
+        "status": 1
+      },
+      {
+        "id": 8,
+        "detail": "Enhancements on the existing design and changes",
+        "created": "1434310365825",
+        "status": 1
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Stage B - UI Automation",
+    "created": "1434310503696",
+    "owner": 1,
+    "boardId": 1,
+    "order": 2,
+    "status": 1,
+    "cards": [
+      {
+        "id": 9,
+        "detail": "Grunt task management for each concatenation and minification",
+        "created": "1434310503696",
+        "status": 0
+      },
+      {
+        "id": 10,
+        "detail": "Creating partials and breaking the design into subsets",
+        "created": "1434310726472",
+        "status": 1
+      },
+      {
+        "id": 11,
+        "detail": "Structuring css and script files into proper folders",
+        "created": "1434310807072",
+        "status": 1
+      }
+    ]
+  }
+]

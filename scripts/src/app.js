@@ -3,12 +3,33 @@
  */
 var app = (function(global, doc, $) {
     'use strict';
-    var app = {};
+    var app = {
+        'boardId': 1,
+        'service': new Provider.Service()
+    };
 
     /**
-     * The init method of the application
+     * Resize all method for ui to bind on window resize.
      */
-    app.init = function(simId) {
+    app.resizeAll = function() {
+        $('body').css({
+            'height': $(window).height(),
+            'width': '100%'
+        });
+        $('#body').css({
+            'height': (parseInt($(window).height()) - 40) + 'px'
+        });
+        $('#activity_menu_container').css({
+            'height': (parseInt($(window).height()) - 40) + 'px'
+        });
+        $('#lists_container').css({
+            'height': (parseInt($(window).height()) - 105) + 'px'
+        });
+        $('.cards-container').css({
+            'max-height': parseInt($('#lists_container').css('height')) -
+            ( parseInt($('.list-header:first').css('height'))
+            + parseInt($('.list-footer:first').css('height')) + 60 ) + 'px'
+        });
     };
 
     /**
@@ -17,7 +38,7 @@ var app = (function(global, doc, $) {
      * @return {string}
      */
     app.getHash = function() {
-        return window.location.hash.replace('#', "");
+        return global.location.hash.replace('#', "");
     };
 
     /**
@@ -26,7 +47,20 @@ var app = (function(global, doc, $) {
      * @param hash
      */
     app.updateHash = function(hash) {
-        window.location.hash = '#' + hash;
+        global.location.hash = '#' + hash;
+    };
+
+    /**
+     * The init method of the application
+     */
+    app.init = function(simId) {
+        this.board = new Board();
+        this.board.init();
+        this.menu = new Menu();
+        this.menu.init();
+
+        $(global).resize(app.resizeAll);
+        this.resizeAll();
     };
 
     return app;
