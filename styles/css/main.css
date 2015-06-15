@@ -1,7 +1,3 @@
-@import url(bootstrap.min.css);
-@import url(font-awesome.min.css);
-@import url(jquery-ui.min.css);
-
 body {
     background-color: #313135;
     color: #ebebeb;
@@ -23,7 +19,7 @@ a:hover {
     height: 30px;
     line-height: 17px;
 }
-#board_lists_container {
+#lists_container {
     padding: 5px 10px;
     margin: 0 10px 5px 10px;
     overflow-x: auto;
@@ -297,6 +293,6 @@ a:hover {
     margin-bottom: 10px;
 }
 
-.card.incative {
+.card.inactive {
     opacity: 0.4;
 }

@@ -11,23 +11,30 @@ Provider.Service = (function(global, doc, $) {
      */
     function Service() {
         this.CLASS_NAME = 'Service';
+        this.cache = {};
     }
 
     Service.prototype.getBoardDetail = function(boardId) {
         var boardDetail = {}, toRet = {};
-        $.ajax({
-            type: 'GET',
-            url: APP_CONST.API_BOARD,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-                boardDetail = data;
-            },
-            error: function(response) {
-                console.log(response);
-            }
-        });
-        toRet = _.filter(boardDetail, function(e) {
+        if(this.cache['boardDetail-boardId-' + boardId] != null) {
+            boardDetail = this.cache['boardDetail-boardId-' + boardId];
+        }
+        else {
+            $.ajax({
+                type: 'GET',
+                url: APP_CONST.API_BOARD,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    boardDetail = data;
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+            this.cache['boardDetail-boardId-' + boardId] = boardDetail;
+        }
+        toRet = _.find(boardDetail, function(e) {
             return e.id === boardId;
         });
 
@@ -36,18 +43,24 @@ Provider.Service = (function(global, doc, $) {
 
     Service.prototype.getBoardLists = function(boardId) {
         var boardLists = {}, toRet = {};
-        $.ajax({
-            type: 'GET',
-            url: APP_CONST.API_LISTS,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-                boardLists = data;
-            },
-            error: function(response) {
-                console.log(response);
-            }
-        });
+        if(this.cache['boardLists-boardId-' + boardId] != null) {
+            boardLists = this.cache['boardLists-boardId-' + boardId];
+        }
+        else {
+            $.ajax({
+                type: 'GET',
+                url: APP_CONST.API_LISTS,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    boardLists = data;
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+            this.cache['boardLists-boardId-' + boardId] = boardLists;
+        }
         toRet = _.filter(boardLists, function(e) {
             return e.boardId === boardId;
         });
@@ -57,23 +70,29 @@ Provider.Service = (function(global, doc, $) {
 
     Service.prototype.getCards = function(listId) {
         var boardLists = {}, toRet = {};
-        $.ajax({
-            type: 'GET',
-            url: APP_CONST.API_LISTS,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-                boardLists = data;
-            },
-            error: function(response) {
-                console.log(response);
-            }
-        });
-        toRet = _.filter(boardLists, function(e) {
+        if (this.cache['boardLists-listId-' + listId] != null) {
+            boardLists = this.cache['boardLists-listId-' + listId];
+        }
+        else {
+            $.ajax({
+                type: 'GET',
+                url: APP_CONST.API_LISTS,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    boardLists = data;
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+            this.cache['boardLists-listId-' + listId] = boardLists;
+        }
+        toRet = _.find(boardLists, function(e) {
             return e.id === listId;
         });
 
-        return toRet[0].cards;
+        return toRet.cards;
     };
 
     Service.prototype.getMenuActivities = function() {

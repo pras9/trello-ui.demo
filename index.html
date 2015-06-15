@@ -20,7 +20,6 @@
             <div id="board_container"></div>
         </div>
     </div>
-
     <script type="text/template" id="board_view">
         <div class="board-header">
             <div class="board-title"><%= board_title %></div>
@@ -42,18 +41,14 @@
                 </div>
                 <div class="cards-container custom-scroll">
                     <% 
-                        if(cards != null && cards.length > 0) {
-                            for(var i = 0; i < cards.length; i++) {
+                    if(cards != null && cards.length > 0) {
+                        for(var i = 0; i < cards.length; i++) {
                     %>
                     <div class="card <%= (cards[i].status == 1) ? '' : 'inactive' %>"><%= cards[i].detail %></div>
-                    %>
-                            }
+                    <%
                         }
+                    }
                     %>
-                    <div class="card">This is the first card of this application</div>
-                    <div class="card">This is the second card of this application</div>
-                    <div class="card inactive">This is the third card of this application</div>
-                    <div class="card inactive">This is the fourth card of this application</div>
                 </div>
                 <div class="list-footer">
                     <a href="javascript:void(0);" class="add-new_card">Add a card ...</a>
@@ -94,7 +89,6 @@
         </a>
     </script>
     <script src="scripts/vendor.bundle.js"></script>
-    <script src="scripts/vendor/lodash.js"></script>
     <script src="scripts/app.bundle.js"></script>
 </body>
 

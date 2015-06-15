@@ -23,9 +23,13 @@ var List = (function(global, doc, $) {
             throw new Error('Cannot build ui for null list');
         }
 
-        this.cardsData = app.service.getCards(this.data.id);
+        if(this.data.cards == null)
+            this.data.cards = app.service.getCards(this.data.id);
         $(this.beforeElement).before(
-            utils.loadTemplate(that.template, that.cardsData)
+            utils.loadTemplate(that.template, {
+                'list_header': that.data.name,
+                'cards': that.data.cards
+            })
         );
     };
 

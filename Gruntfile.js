@@ -26,7 +26,8 @@ module.exports = function(grunt) {
                 src: [
                     'scripts/vendor/jquery-2.1.4.min.js',
                     'scripts/vendor/jquery-ui.min.js',
-                    'scripts/vendor/bootstrap.min.js'
+                    'scripts/vendor/bootstrap.min.js',
+                    'scripts/vendor/lodash.min.js'
                 ],
                 dest: 'scripts/vendor.bundle.js'
             },
