@@ -16,7 +16,7 @@ var Board = (function(global, doc, $) {
     }
 
     Board.prototype.bindEvents = function() {
-
+        this.list.bindEvents();
     };
 
     Board.prototype.buildUi = function() {

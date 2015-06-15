@@ -2,15 +2,18 @@ body {
     background-color: #313135;
     color: #ebebeb;
 }
+
 a {
     color: #222222;
     text-decoration: none;
     vertical-align: top;
 }
+
 a:hover {
     color: #555555;
     text-decoration: none;
 }
+
 #boards_dd {
     background-color: #777;
     border-color: #777;
@@ -19,6 +22,7 @@ a:hover {
     height: 30px;
     line-height: 17px;
 }
+
 #lists_container {
     padding: 5px 10px;
     margin: 0 10px 5px 10px;
@@ -38,6 +42,7 @@ a:hover {
     -ms-flex-direction: row;
     flex-direction: row;
 }
+
 .list-container {
     padding: 8px;
     margin-right: 5px;
@@ -57,8 +62,10 @@ a:hover {
     -ms-flex: 0 0 316px;
     flex: 0 0 316px;
 }
+
 .list-container.new-list {
 }
+
 .list {
     width: 300px;
     display: block;
@@ -66,6 +73,7 @@ a:hover {
     margin: 0px !important;
     overflow: hidden;
 }
+
 #header {
     background: #45454A;
     width: 100%;
@@ -75,12 +83,14 @@ a:hover {
     position: relative;
     z-index: 10;
 }
+
 #body {
     width: 100%;
     display: block;
     overflow: hidden;
     position: relative;
 }
+
 .list-header {
     font-size: 16px;
     font-weight: bold;
@@ -96,6 +106,7 @@ a:hover {
     min-height: 20px;
     color: #333333;
 }
+
 .cards-container {
     -webkit-box-flex: 1;
     -webkit-flex: 1 1 auto;
@@ -104,12 +115,14 @@ a:hover {
     overflow-y: auto;
     overflow-x: hidden;
 }
+
 #app_container {
     height: 100%;
     width: 100%;
     display: block;
     overflow: hidden;
 }
+
 .card {
     background-color: #F4F4F5;
     margin: 1px 10px 8px;
@@ -119,34 +132,43 @@ a:hover {
     min-height: 40px;
     color: #333;
 }
+
 .custom-scroll {
     -webkit-overflow-scrolling: touch;
     -webkit-transform: translate3d(0, 0, 0)
 }
+
 .custom-scroll::-webkit-scrollbar {
     height: 9px;
     width: 9px
 }
+
 .custom-scroll::-webkit-scrollbar-button:end:increment,
 .custom-scroll::-webkit-scrollbar-button:start:decrement {
     background: 0 0;
     display: none
 }
+
 .custom-scroll::-webkit-scrollbar-track-piece {
     background: #d6dadc
 }
+
 .custom-scroll::-webkit-scrollbar-track-piece:vertical:start {
     border-radius: 5px 5px 0 0
 }
+
 .custom-scroll::-webkit-scrollbar-track-piece:vertical:end {
     border-radius: 0 0 5px 5px
 }
+
 .custom-scroll::-webkit-scrollbar-track-piece:horizontal:start {
     border-radius: 5px 0 0 5px
 }
+
 .custom-scroll::-webkit-scrollbar-track-piece:horizontal:end {
     border-radius: 0 5px 5px 0
 }
+
 .custom-scroll::-webkit-scrollbar-thumb:horizontal,
 .custom-scroll::-webkit-scrollbar-thumb:vertical {
     background: #45454A;
@@ -154,6 +176,7 @@ a:hover {
     display: block;
     height: 50px
 }
+
 .list-footer {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 auto;
@@ -163,19 +186,21 @@ a:hover {
 }
 
 .list-adder {
-    width: 300px;    display: block;    
+    width: 280px;
+    display: block;
     padding: 8px 10px;
     border-radius: 5px;
     background-color: #45454A;
     cursor: pointer;
 }
+
 .list-adder a {
     color: #C0C0C4;
 }
+
 .list-adder:hover {
     background-color: #707070;
 }
-
 
 .board-header {
     height: 30px;
@@ -209,9 +234,11 @@ a:hover {
     padding: 5px 10px 5px 8px;
     border-radius: 5px;
 }
-#show_activity_menu:hover{
+
+#show_activity_menu:hover {
     background-color: #45454A;
 }
+
 #show_activity_menu > span {
     text-decoration: underline;
     margin-left: 8px;
@@ -231,6 +258,7 @@ a:hover {
     cursor: pointer;
     z-index: 2;
 }
+
 #hide_activity_menu:hover {
     background-color: #777;
 }
@@ -295,4 +323,44 @@ a:hover {
 
 .card.inactive {
     opacity: 0.4;
+}
+
+.list-rename {
+    font-size: 16px;    font-weight: bold;
+    -webkit-box-flex: 0;    -webkit-flex: 0 0 auto;    -ms-flex: 0 0 auto;    flex: 0 0 auto;    padding: 8px 10px;    position: relative;    min-height: 20px;    color: #333333;
+    display: none;
+}
+
+.input-listname {
+    background: rgba(0,0,0,.03);    border-color: rgba(0,0,0,.15);    box-shadow: inset 0 1px 6px rgba(0,0,0,.1);    
+    margin-bottom: 6px;
+    width: 91%;
+    height: 26px;
+    padding: 0 10px;
+    outline: none;
+}
+
+.list-rename .btn {
+    height: 30px;
+    line-height: 17px;
+    font-weight: bold;
+    color: #FFF;
+}
+
+.btn.save-listname {
+    background-color: #5aac44;
+}
+
+.btn.cancel-list-rename {
+    /* font-size: 20px; */
+    background-color: #777;
+}
+
+.new-list > .list-rename {
+    background-color: #C0C0C4;
+    border-radius: 5px;
+}
+
+.list-header > span {
+    cursor: pointer;
 }

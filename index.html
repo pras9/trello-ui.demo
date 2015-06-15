@@ -27,6 +27,11 @@
         <div id="lists_container" class="custom-scroll">
 
             <div class="list-container new-list">
+                <div class="list-rename">
+                    <input type="text" class="input-listname" />
+                    <button class="btn save-listname">SAVE</button>&nbsp;
+                    <button class="btn cancel-list-rename">X</button>
+                </div>
                 <div class="list-adder">
                     <a href="javascript:void(0);" id="add_new_list">Add a list ...</a>
                 </div>
@@ -36,8 +41,13 @@
     <script type="text/template" id="card_list_view">
         <div class="list-container droppable">
             <div class="list panel">
-                <div class="list-header">
-                    <%= list_header %>
+                <div class="list-rename">
+                    <input type="text" class="input-listname" />
+                    <button class="btn save-listname">SAVE</button>&nbsp;
+                    <button class="btn cancel-list-rename">X</button>
+                </div>
+                <div class="list-header" data-listid="<%= listid %>">
+                    <span><%= list_header %></span>
                 </div>
                 <div class="cards-container custom-scroll">
                     <% 
