@@ -1,44 +1,5 @@
-    </div>
-    <script src="scripts/jquery-2.1.4.js"></script>
-    <script src="scripts/jquery-ui.js"></script>
-    <script src="scripts/bootstrap.js"></script>
-    <script>
-        $(document).ready(function() {
-            function resizeAll() {
-                $('body').css({
-                    'height': $(window).height(),
-                    'width': '100%'
-                });
-                $('#body').css({
-                    'height': (parseInt($(window).height()) - 40) + 'px'
-                });
-                $('#activity_menu_container').css({
-                    'height': (parseInt($(window).height()) - 40) + 'px'
-                });
-                $('#board_lists_container').css({
-                    'height': (parseInt($(window).height()) - 105) + 'px'
-                });
-                $('.cards-container').css({
-                    'max-height': parseInt($('#board_lists_container').css('height')) - 
-                                    ( parseInt($('.list-header:first').css('height')) 
-                                        + parseInt($('.list-footer:first').css('height')) + 60 ) + 'px'
-                });
-            }
-            $(window).resize(resizeAll);
-            $('#show_activity_menu').click(function() {
-                setTimeout(function() {
-                    $('#hide_activity_menu').show();
-                }, 700);
-                $('#activity_menu_container').show("slide", { direction: "right" }, 600);
-            });
-            $('#hide_activity_menu').click(function() {
-                $(this).hide();
-                $('#activity_menu_container').hide("slide", { direction: "right" }, 600);
-            });
-            
-            resizeAll();
-        });
-    </script>
+    <script src="scripts/vendor.bundle.js"></script>
+    <script src="scripts/app.bundle.min.js"></script>
 </body>
 
 </html>

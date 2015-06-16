@@ -2,7 +2,8 @@ APP_CONST = {
     'DATA_PATH': 'data',
     'API_BOARD': 'data/board.json',
     'API_LISTS': 'data/lists.json',
-    'API_USER': 'data/user.json'
+    'API_USER': 'data/user.json',
+    'API_ACTIVITIES': 'data/activity.json'
 };;
 
 /**
@@ -80,7 +81,51 @@ var utils = (function(global, doc, $) {
 
 ;
 
-;
+var Provider = Provider || {};
+
+/**
+ * Class Router
+ */
+Provider.Router = (function(global, doc, $) {
+    'use strict';
+
+    /**
+     * @constructor
+     */
+    function Router() {
+        this.CLASS_NAME = 'Router';
+        this.routes = {};
+
+        this.listenToChange();
+    }
+
+    Router.prototype.addRoute = function(uri, callback) {
+        this.routes[uri] = callback;
+    };
+
+    Router.prototype.delRoute = function(uri) {
+        if(this.routes.hasOwnProperty(uri))
+            delete this.routes[uri];
+
+        return this;
+    };
+
+    Router.prototype.listenToChange = function() {
+        var that = this, hash;
+
+        $(global).on('hashchange', function() {
+            hash = app.getHash();
+            if(that.routes.hasOwnProperty(hash)) {
+                that.routes[hash]();
+            }
+        });
+
+        return this;
+    };
+
+    return Router;
+
+})(window, document, jQuery);;
 
 var Provider = Provider || {};
 
@@ -202,6 +247,46 @@ Provider.Service = (function(global, doc, $) {
         });
     };
 
+    Service.prototype.addList = function(name) {
+        var key = 'lists-details',
+            list = {},
+            lists = [],
+            maxId,
+            timestamp = new Date().getTime();
+        if(this.cache[key] != null) {
+            lists = this.cache[key];
+        }
+        else {
+            lists = JSON.parse(this.storage.getItem(key));
+        }
+
+        maxId = _.result(_.max(lists, function(e) {
+            return e.id;
+        }), 'id');
+
+        lists.push({
+            'id': maxId + 1,
+            'name': name,
+            'created': timestamp,
+            'owner': app.currentUserId,
+            'boardId': app.boardId,
+            'order': lists.length + 1,
+            'status': 1
+        });
+        this.cache[key] = lists;
+        this.storage.setItem(key, JSON.stringify(lists));
+
+        this.addActivity({
+            'user': app.currentUserId,
+            'actionType': 'added',
+            'object': 'list',
+            'objectTitle': name,
+            'timestamp': timestamp
+        });
+
+        return maxId + 1;
+    };
+
     Service.prototype.setListName = function(listId, name) {
         var key = 'lists-details',
             list = {},
@@ -225,7 +310,62 @@ Provider.Service = (function(global, doc, $) {
     };
 
     Service.prototype.getMenuActivities = function() {
-        return {};
+        var key = 'user-activity', toRet = {}, activities;
+        if(this.storage.getItem(key) != null) {
+            toRet = JSON.parse(this.storage.getItem(key));
+        }
+        else {
+            activities = this.get(APP_CONST.API_ACTIVITIES);
+            toRet = _.sortByOrder(activities, ['timestamp'], false);
+            this.storage.setItem(key, JSON.stringify(toRet));
+        }
+
+        return toRet;
+    };
+
+    Service.prototype.addActivity = function(param) {
+        var key = 'user-activity',
+            activities = [];
+        if(this.storage.getItem(key) != null) {
+            activities = JSON.parse(this.storage.getItem(key));
+        }
+        else {
+            activities = this.get(APP_CONST.API_ACTIVITIES);
+            activities = _.sortByOrder(activities, ['timestamp'], false);
+        }
+
+        param.actionText = param.actionType + ' '
+            + param.object + ' <a href="javascript:void(0);">'
+            + param.objectTitle.substring(0, 19) + '</a>';
+        activities.unshift({
+            'user': param.user,
+            'actionText': param.actionText,
+            'timestamp': (param.timestamp != null) ? param.timestamp : new Date().getTime()
+        });
+
+        this.storage.setItem(key, JSON.stringify(activities));
+        app.menu.addActivity(param);
+    };
+
+    Service.prototype.getUserDetail = function(userId) {
+        var key = 'current-user', toRet = {}, users;
+        if(this.cache[key] != null) {
+            toRet = this.cache[key];
+        }
+        else if(this.storage.getItem(key) != null) {
+            toRet = JSON.parse(this.storage.getItem(key));
+            this.cache[key] = toRet;
+        }
+        else {
+            users = this.get(APP_CONST.API_USER);
+            toRet = _.find(users, function(e) {
+                return e.id === userId;
+            });
+            this.cache[key] = toRet;
+            this.storage.setItem(key, JSON.stringify(toRet));
+        }
+
+        return toRet;
     };
 
     return Service;
@@ -302,6 +442,10 @@ var List = (function(global, doc, $) {
         this.listRenameInput = '.input-listname';
         this.listRenameSaveBtn = '.list-rename .save-listname';
         this.listRenameCancelBtn = '.list-rename .cancel-list-rename';
+        this.addNewList = '.list-adder';
+        this.newListAddBlock = '.new-list > .list-rename';
+        this.newListSaveBtn = '.new-list .save-listname';
+        this.newListCancelBtn = '.new-list .cancel-list-rename';
     }
 
     List.prototype.bindEvents = function() {
@@ -316,7 +460,7 @@ var List = (function(global, doc, $) {
         $(this.listRenameSaveBtn).off('click').on('click', function() {
             var listName = $(this).parent().find(that.listRenameInput).val(),
                 listId = $(this).parent().parent().find(that.listHeader).data('listid');
-            if(app.service.setListName(listId, listName) != null) {
+            if(that.rename(listId, listName) != null) {
                 $(this).parent().parent().find(that.listHeaderText).text(listName);
             }
             $(this).parent().hide();
@@ -325,6 +469,22 @@ var List = (function(global, doc, $) {
         $(this.listRenameCancelBtn).off('click').on('click', function() {
             $(this).parent().hide();
             $(this).parent().parent().find(that.listHeader).show();
+        });
+
+        $(this.newListSaveBtn).off('click').on('click', function() {
+            $(this).parent().hide();
+            $(that.addNewList).show();
+            that.add($(this).parent().find(that.listRenameInput).val());
+            $(this).parent().find(that.listRenameInput).val('');
+        });
+        $(this.newListCancelBtn).off('click').on('click', function() {
+            $(this).parent().hide();
+            $(that.addNewList).show();
+            $(this).parent().find(that.listRenameInput).val('');
+        });
+        $(this.addNewList).off('click').on('click', function() {
+            $(that.newListAddBlock).show();
+            $(this).hide();
         });
     };
 
@@ -347,10 +507,16 @@ var List = (function(global, doc, $) {
         );
     };
 
-    List.prototype.add = function() {
+    List.prototype.add = function(name) {
+        var listId = app.service.addList(name);
+        this.buildUi({
+            'id': listId,
+            'name': name
+        });
     };
 
-    List.prototype.rename = function() {
+    List.prototype.rename = function(listId, listName) {
+        return app.service.setListName(listId, listName);
     };
 
     List.prototype.archive = function() {
@@ -385,9 +551,11 @@ var Menu = (function(global, doc, $) {
         this.CLASS_NAME = 'Menu';
         this.container = '#menu_container';
         this.template = 'menu';
+        this.activityTemplate = 'activity';
         this.showMenuBtn = '#show_activity_menu';
         this.hideMenuBtn = '#hide_activity_menu';
         this.menuInnerContainer = '#activity_menu_container';
+        this.activityContainer = '.activities';
     }
 
     /**
@@ -412,15 +580,46 @@ var Menu = (function(global, doc, $) {
      * Loads the template and builds the UI of Menu
      */
     Menu.prototype.buildUi = function() {
-        var that = this;
+        var that = this,
+            user,
+            options = {
+                hour: "2-digit", minute: "2-digit", year: "numeric", month: "short", day: "numeric"
+            },
+            t;
 
         this.menuActivities = app.service.getMenuActivities(app.boardId);
+        $.each(this.menuActivities, function(i, v) {
+            user = app.service.getUserDetail(v.user);
+            that.menuActivities[i].userName = user.name;
+            that.menuActivities[i].avatar = user.avatar;
+            t = new Date(parseInt(v.timestamp));
+            that.menuActivities[i].timestamp = t.toLocaleTimeString("en-us", options);
+        });
 
         $(this.container).html(utils.loadTemplate(that.template, {
             'activities': that.menuActivities
         }));
 
         this.bindEvents();
+    };
+
+    /**
+     * Adds actovity into menu activity section
+     *
+     * @param param
+     */
+    Menu.prototype.addActivity = function(param) {
+        var that = this,
+            t = new Date(parseInt(param.timestamp)),
+            options = {
+                hour: "2-digit", minute: "2-digit", year: "numeric", month: "short", day: "numeric"
+            },
+            user = app.service.getUserDetail(param.user);
+        param.userName = user.name;
+        param.avatar = user.avatar;
+        param.timestamp = t.toLocaleTimeString("en-us", options);
+
+        $(this.activityContainer).find('h4').after(utils.loadTemplate(that.activityTemplate, param));
     };
 
     /**
@@ -495,6 +694,9 @@ var app = (function(global, doc, $) {
         this.board.init();
         this.menu = new Menu();
         this.menu.init();
+        this.router = new Provider.Router();
+        this.currentUserId = 1;
+        this.currentUser = this.service.getUserDetail(this.currentUserId);
 
         $(global).resize(app.resizeAll);
         this.resizeAll();

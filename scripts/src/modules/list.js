@@ -1,3 +1,6 @@
+/**
+ * Class List
+ */
 var List = (function(global, doc, $) {
     'use strict';
 
@@ -15,6 +18,10 @@ var List = (function(global, doc, $) {
         this.listRenameInput = '.input-listname';
         this.listRenameSaveBtn = '.list-rename .save-listname';
         this.listRenameCancelBtn = '.list-rename .cancel-list-rename';
+        this.addNewList = '.list-adder';
+        this.newListAddBlock = '.new-list > .list-rename';
+        this.newListSaveBtn = '.new-list .save-listname';
+        this.newListCancelBtn = '.new-list .cancel-list-rename';
     }
 
     List.prototype.bindEvents = function() {
@@ -29,7 +36,7 @@ var List = (function(global, doc, $) {
         $(this.listRenameSaveBtn).off('click').on('click', function() {
             var listName = $(this).parent().find(that.listRenameInput).val(),
                 listId = $(this).parent().parent().find(that.listHeader).data('listid');
-            if(app.service.setListName(listId, listName) != null) {
+            if(that.rename(listId, listName) != null) {
                 $(this).parent().parent().find(that.listHeaderText).text(listName);
             }
             $(this).parent().hide();
@@ -38,6 +45,22 @@ var List = (function(global, doc, $) {
         $(this.listRenameCancelBtn).off('click').on('click', function() {
             $(this).parent().hide();
             $(this).parent().parent().find(that.listHeader).show();
+        });
+
+        $(this.newListSaveBtn).off('click').on('click', function() {
+            $(this).parent().hide();
+            $(that.addNewList).show();
+            that.add($(this).parent().find(that.listRenameInput).val());
+            $(this).parent().find(that.listRenameInput).val('');
+        });
+        $(this.newListCancelBtn).off('click').on('click', function() {
+            $(this).parent().hide();
+            $(that.addNewList).show();
+            $(this).parent().find(that.listRenameInput).val('');
+        });
+        $(this.addNewList).off('click').on('click', function() {
+            $(that.newListAddBlock).show();
+            $(this).hide();
         });
     };
 
@@ -60,10 +83,16 @@ var List = (function(global, doc, $) {
         );
     };
 
-    List.prototype.add = function() {
+    List.prototype.add = function(name) {
+        var listId = app.service.addList(name);
+        this.buildUi({
+            'id': listId,
+            'name': name
+        });
     };
 
-    List.prototype.rename = function() {
+    List.prototype.rename = function(listId, listName) {
+        return app.service.setListName(listId, listName);
     };
 
     List.prototype.archive = function() {

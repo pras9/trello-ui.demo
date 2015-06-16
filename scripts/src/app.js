@@ -58,6 +58,9 @@ var app = (function(global, doc, $) {
         this.board.init();
         this.menu = new Menu();
         this.menu.init();
+        this.router = new Provider.Router();
+        this.currentUserId = 1;
+        this.currentUser = this.service.getUserDetail(this.currentUserId);
 
         $(global).resize(app.resizeAll);
         this.resizeAll();
