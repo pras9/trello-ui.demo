@@ -11,36 +11,31 @@ var Card = (function(global, doc, $) {
         this.CLASS_NAME = 'Card';
         this.template = 'card';
         this.cardDetailTemplate = 'card_detail';
+        this.cardsContainer = '.cards-container';
+        this.addNewCardBtn = '.add-new-card';
+        this.cardAddContainer = '.add-card-container';
+        this.cardNameInput = '.input-cardname';
+        this.addCardSubmitBtn = '.add-card-container > .add-card';
+        this.addCardCancelBtn = '.add-card-container > .cancel-card-add';
     }
 
+    
     Card.prototype.bindEvents = function() {
         var that = this;
-        
-        $(this.listHeaderText).off('click').on('click', function() {
-            $(this).parent().hide();
-            $(this).parent().parent().find(that.listRenameBlock)
-                .show()
-                .find(that.listRenameInput).val($(this).text());
-        });
-        $(this.listRenameSaveBtn).off('click').on('click', function() {
-            var listName = $(this).parent().find(that.listRenameInput).val(),
-                listId = $(this).parent().parent().find(that.listHeader).data('listid');
-            if(that.rename(listId, listName) != null) {
-                $(this).parent().parent().find(that.listHeaderText).text(listName);
-            }
-            $(this).parent().hide();
-            $(this).parent().parent().find(that.listHeader).show();
-        });
-        $(this.listRenameCancelBtn).off('click').on('click', function() {
-            $(this).parent().hide();
-            $(this).parent().parent().find(that.listHeader).show();
-        });
 
-        $(this.newListSaveBtn).off('click').on('click', function() {
-            $(this).parent().hide();
-            $(that.addNewList).show();
-            that.add($(this).parent().find(that.listRenameInput).val());
-            $(this).parent().find(that.listRenameInput).val('');
+        $(this.addNewCardBtn).off('click').on('click', function() {
+            var listId = $(this).data('listid');
+            $('#list' + listId).find(that.cardAddContainer).show();
+        });
+        $(this.addCardSubmitBtn).off('click').on('click', function() {
+            var cardInputVal = $(this).parent().find(that.listRenameInput).val();
+            if(cardInputVal != null && cardInputVal !== '') {
+                $(this).parent().hide();
+                // TODO: to start from here
+                $(that.addNewList).show();
+                that.add($(this).parent().find(that.listRenameInput).val());
+                $(this).parent().find(that.listRenameInput).val('');
+            }
         });
         $(this.newListCancelBtn).off('click').on('click', function() {
             $(this).parent().hide();

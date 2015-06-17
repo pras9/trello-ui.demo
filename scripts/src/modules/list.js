@@ -28,6 +28,8 @@ var List = (function(global, doc, $) {
         this.archiveListBtn = '.archive-list';
         this.copyListBtn = '.copy-list';
         this.cardsContainer = '.cards-container';
+        
+        this.card = new Card();
     }
 
     /**
@@ -89,6 +91,8 @@ var List = (function(global, doc, $) {
         $(this.archiveListBtn).off('click').on('click', function() {
             that.archive($(this).data('listid'));
         });
+        
+        this.card.bindEvents();
     };
 
     /**
