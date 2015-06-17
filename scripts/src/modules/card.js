@@ -9,24 +9,13 @@ var Card = (function(global, doc, $) {
      */
     function Card() {
         this.CLASS_NAME = 'Card';
-        this.template = 'card_list';
-        this.beforeElement = '.new-list';
-        this.data = null;
-        this.listHeader = '.list-header';
-        this.listHeaderText = '.list-header > span';
-        this.listRenameBlock = '.list-rename';
-        this.listRenameInput = '.input-listname';
-        this.listRenameSaveBtn = '.list-rename .save-listname';
-        this.listRenameCancelBtn = '.list-rename .cancel-list-rename';
-        this.addNewList = '.list-adder';
-        this.newListAddBlock = '.new-list > .list-rename';
-        this.newListSaveBtn = '.new-list .save-listname';
-        this.newListCancelBtn = '.new-list .cancel-list-rename';
+        this.template = 'card';
+        this.cardDetailTemplate = 'card_detail';
     }
 
     Card.prototype.bindEvents = function() {
         var that = this;
-
+        
         $(this.listHeaderText).off('click').on('click', function() {
             $(this).parent().hide();
             $(this).parent().parent().find(that.listRenameBlock)

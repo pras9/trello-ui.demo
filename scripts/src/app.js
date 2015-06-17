@@ -30,6 +30,10 @@ var app = (function(global, doc, $) {
             ( parseInt($('.list-header:first').css('height'))
             + parseInt($('.list-footer:first').css('height')) + 60 ) + 'px'
         });
+        
+        $('.cards-container').each(function() {
+            $(this).scrollTop($(this).prop('scrollHeight'));
+        });
     };
 
     /**

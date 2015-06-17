@@ -27,8 +27,12 @@ var List = (function(global, doc, $) {
         this.dropdownListClose = '.drop-header > .fa-times';
         this.archiveListBtn = '.archive-list';
         this.copyListBtn = '.copy-list';
+        this.cardsContainer = '.cards-container';
     }
 
+    /**
+     * Binds all events related to list template
+     */
     List.prototype.bindEvents = function() {
         var that = this;
 
@@ -69,17 +73,29 @@ var List = (function(global, doc, $) {
         });
 
         $(this.dropdownListOpen).off('click').on('click', function() {
+            var listid = $(this).parent().data('listid');
             $(that.dropdownList).hide();
-            $(that.dropdownList + '[rel="list'+$(this).parent().data('listid')+'"]').show();
+            $(that.dropdownList + '[rel="list'+listid+'"]').show();
+            $("#list"+listid).find(that.cardsContainer).scrollTop(0);
+            
         });
         $(this.dropdownListClose).off('click').on('click', function() {
             $(this).parent().parent().hide();
+            
+            $(that.cardsContainer).each(function() {
+                $(this).scrollTop($(this).prop('scrollHeight'));
+            });
         });
         $(this.archiveListBtn).off('click').on('click', function() {
             that.archive($(this).data('listid'));
         });
     };
 
+    /**
+     * Builds the list with provided data
+     *
+     * @param data
+     */
     List.prototype.buildUi = function(data) {
         var that = this;
         if(data != null) {
@@ -99,6 +115,11 @@ var List = (function(global, doc, $) {
         );
     };
 
+    /**
+     * Adds a list into board
+     *
+     * @param name
+     */
     List.prototype.add = function(name) {
         var listId = app.service.addList(name);
         this.buildUi({
@@ -107,10 +128,21 @@ var List = (function(global, doc, $) {
         });
     };
 
+    /**
+     * Renames a list
+     *
+     * @param listId
+     * @param listName
+     */
     List.prototype.rename = function(listId, listName) {
         return app.service.setListName(listId, listName);
     };
 
+    /**
+     * Archives list
+     *
+     * @param listId
+     */
     List.prototype.archive = function(listId) {
         app.service.archiveList(listId);
         $("#list" + listId).hide();

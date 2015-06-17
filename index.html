@@ -63,25 +63,25 @@
                     <span><%= list_header %></span>
                     <i class="fa fa-angle-down"></i>
                 </div>
-                <div class="list-drop" rel="list<%= listid %>">
-                    <div class="drop-header">
-                        <span>List Actions</span>
-                        <i class="fa fa-times"></i>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="drop-body custom-scroll">
-                        <div class="drop-lists">
-                            <a href="javascript:void(0);" data-listid="<%= listid %>" class="add-new-card">Add Card</a>
-                            <a href="javascript:void(0);" data-listid="<%= listid %>" class="copy-list">Copy List</a>
-                            <a href="javascript:void(0);" data-listid="<%= listid %>" class="archive-all-cards">Archive All Cards</a>
+                <div class="cards-container custom-scroll">
+                    <div class="list-drop" rel="list<%= listid %>">
+                        <div class="drop-header">
+                            <span>List Actions</span>
+                            <i class="fa fa-times"></i>
                         </div>
                         <div class="divider"></div>
-                        <div class="drop-lists">
-                            <a href="javascript:void(0);" data-listid="<%= listid %>" class="archive-list">Archive List</a>
+                        <div class="drop-body custom-scroll">
+                            <div class="drop-lists">
+                                <a href="javascript:void(0);" data-listid="<%= listid %>" class="add-new-card">Add Card</a>
+                                <a href="javascript:void(0);" data-listid="<%= listid %>" class="copy-list">Copy List</a>
+                                <a href="javascript:void(0);" data-listid="<%= listid %>" class="archive-all-cards">Archive All Cards</a>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="drop-lists">
+                                <a href="javascript:void(0);" data-listid="<%= listid %>" class="archive-list">Archive List</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="cards-container custom-scroll">
                     <% 
                     if(cards != null && cards.length > 0) {
                         for(var i = 0; i < cards.length; i++) {
@@ -91,6 +91,11 @@
                         }
                     }
                     %>
+                    <div class="add-card-container">
+                        <input type="text" class="input-cardname" />
+                        <button class="btn add-card">Add</button>&nbsp;
+                        <button class="btn cancel-card-add">X</button>
+                    </div>
                 </div>
                 <div class="list-footer">
                     <a href="javascript:void(0);" class="add-new-card">Add a card ...</a>

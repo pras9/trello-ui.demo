@@ -184,6 +184,7 @@ a:hover {
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     padding: 5px 10px;
+    display: block;
 }
 
 .list-adder {
@@ -377,9 +378,9 @@ a:hover {
 }
 
 .list-drop {
-    width: 280px;
+    /* width: 280px; */
     background-color: #EBEBEB;
-    margin: 0 auto;
+    margin: 0 10px;
     border-radius: 5px 0 5px 5px;
     display: none;
     z-index: 10;
@@ -427,4 +428,25 @@ a:hover {
     color: #777;
     text-align: center;
     padding: 10px 10px 0 10px;
+}
+
+.add-card-container {
+    font-size: 16px;    font-weight: bold;                    padding: 8px 10px;    position: relative;    min-height: 20px;    color: #333333;    
+    display: none;
+}
+
+.input-cardname {
+    background: rgba(0,0,0,.03);    border-color: rgba(0,0,0,.15);    box-shadow: inset 0 1px 6px rgba(0,0,0,.1);    margin-bottom: 6px;    width: 91%;    height: 26px;    padding: 0 10px;    outline: none;
+}
+
+.add-card-container .btn {
+    height: 30px;    line-height: 17px;    font-weight: bold;    color: #FFF;
+}
+
+.btn.add-card {
+    background-color: #5aac44;
+}
+
+.btn.cancel-card-add {
+    background-color: #777;
 }
