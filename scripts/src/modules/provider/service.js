@@ -97,7 +97,7 @@ Provider.Service = (function(global, doc, $) {
         }
 
         return _.filter(toRet, function(e) {
-            return e.boardId === boardId;
+            return (e.boardId === boardId && e.status === 1);
         });
     };
 
@@ -160,7 +160,6 @@ Provider.Service = (function(global, doc, $) {
 
     Service.prototype.setListName = function(listId, name) {
         var key = 'lists-details',
-            list = {},
             lists = [];
         if(this.cache[key] != null) {
             lists = this.cache[key];
@@ -172,6 +171,27 @@ Provider.Service = (function(global, doc, $) {
         $.each(lists, function(i, v) {
             if(v.id === listId) {
                 lists[i].name = name;
+            }
+        });
+        this.cache[key] = lists;
+        this.storage.setItem(key, JSON.stringify(lists));
+
+        return this;
+    };
+
+    Service.prototype.archiveList = function(listId) {
+        var key = 'lists-details',
+            lists = [];
+        if(this.cache[key] != null) {
+            lists = this.cache[key];
+        }
+        else {
+            lists = JSON.parse(this.storage.getItem(key));
+        }
+
+        $.each(lists, function(i, v) {
+            if(v.id === listId) {
+                lists[i].status = 0;
             }
         });
         this.cache[key] = lists;

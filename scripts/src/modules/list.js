@@ -22,6 +22,11 @@ var List = (function(global, doc, $) {
         this.newListAddBlock = '.new-list > .list-rename';
         this.newListSaveBtn = '.new-list .save-listname';
         this.newListCancelBtn = '.new-list .cancel-list-rename';
+        this.dropdownList = '.list-drop';
+        this.dropdownListOpen = '.list-header > .fa-angle-down';
+        this.dropdownListClose = '.drop-header > .fa-times';
+        this.archiveListBtn = '.archive-list';
+        this.copyListBtn = '.copy-list';
     }
 
     List.prototype.bindEvents = function() {
@@ -62,6 +67,17 @@ var List = (function(global, doc, $) {
             $(that.newListAddBlock).show();
             $(this).hide();
         });
+
+        $(this.dropdownListOpen).off('click').on('click', function() {
+            $(that.dropdownList).hide();
+            $(that.dropdownList + '[rel="list'+$(this).parent().data('listid')+'"]').show();
+        });
+        $(this.dropdownListClose).off('click').on('click', function() {
+            $(this).parent().parent().hide();
+        });
+        $(this.archiveListBtn).off('click').on('click', function() {
+            that.archive($(this).data('listid'));
+        });
     };
 
     List.prototype.buildUi = function(data) {
@@ -95,7 +111,9 @@ var List = (function(global, doc, $) {
         return app.service.setListName(listId, listName);
     };
 
-    List.prototype.archive = function() {
+    List.prototype.archive = function(listId) {
+        app.service.archiveList(listId);
+        $("#list" + listId).hide();
     };
 
     /**

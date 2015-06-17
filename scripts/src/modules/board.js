@@ -29,7 +29,9 @@ var Board = (function(global, doc, $) {
             'board_title': that.boardData.name
         }));
         $.each(this.listsData, function(i, e) {
-            that.list.buildUi(e);
+            if(e.status === 1) {
+                that.list.buildUi(e);
+            }
         });
 
         this.bindEvents();
