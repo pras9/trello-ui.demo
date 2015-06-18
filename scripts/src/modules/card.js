@@ -28,15 +28,16 @@ var Card = (function(global, doc, $) {
         $(this.addNewCardBtn).off('click').on('click', function() {
             var listId = $(this).data('listid');
             $('#list' + listId).find(that.cardAddContainer).show();
+            $('#list' + listId).find(that.cardsContainer)
+                .scrollTop($('#list' + listId).find(that.cardsContainer).prop('scrollHeight'));
         });
         $(this.addCardSubmitBtn).off('click').on('click', function() {
-            var cardInputVal = $(this).parent().find(that.listRenameInput).val();
+            var cardInputVal = $(this).parent().find(that.cardNameInput).val();
             if(cardInputVal != null && cardInputVal !== '') {
                 $(this).parent().hide();
                 // TODO: to start from here
-                $(that.addNewList).show();
-                that.add($(this).parent().find(that.listRenameInput).val());
-                $(this).parent().find(that.listRenameInput).val('');
+                that.add($(this).parent().data('listid'), $(this).parent().find(that.cardNameInput).val());
+                $(this).parent().find(that.cardNameInput).val('');
             }
         });
         $(this.newListCancelBtn).off('click').on('click', function() {
@@ -69,12 +70,12 @@ var Card = (function(global, doc, $) {
         );
     };
 
-    Card.prototype.add = function(name) {
-        var listId = app.service.addList(name);
-        this.buildUi({
+    Card.prototype.add = function(listId, name) {
+        var cardId = app.service.addCard(listId, name);
+        /*this.buildUi({
             'id': listId,
             'name': name
-        });
+        });*/
     };
 
     Card.prototype.rename = function(listId, listName) {

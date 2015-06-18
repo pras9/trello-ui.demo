@@ -118,6 +118,65 @@ Provider.Service = (function(global, doc, $) {
         });
     };
 
+    Service.prototype.getMenuActivities = function() {
+        var key = 'user-activity', toRet = {}, activities;
+        if(this.storage.getItem(key) != null) {
+            toRet = JSON.parse(this.storage.getItem(key));
+        }
+        else {
+            activities = this.get(APP_CONST.API_ACTIVITIES);
+            toRet = _.sortByOrder(activities, ['timestamp'], false);
+            this.storage.setItem(key, JSON.stringify(toRet));
+        }
+
+        return toRet;
+    };
+
+    Service.prototype.addActivity = function(param) {
+        var key = 'user-activity',
+            activities = [];
+        if(this.storage.getItem(key) != null) {
+            activities = JSON.parse(this.storage.getItem(key));
+        }
+        else {
+            activities = this.get(APP_CONST.API_ACTIVITIES);
+            activities = _.sortByOrder(activities, ['timestamp'], false);
+        }
+
+        param.actionText = param.actionType + ' '
+            + param.object + ' <a href="javascript:void(0);">'
+            + param.objectTitle.substring(0, 19) + '</a>';
+        activities.unshift({
+            'user': param.user,
+            'actionText': param.actionText,
+            'timestamp': (param.timestamp != null) ? param.timestamp : new Date().getTime()
+        });
+
+        this.storage.setItem(key, JSON.stringify(activities));
+        app.menu.addActivity(param);
+    };
+
+    Service.prototype.getUserDetail = function(userId) {
+        var key = 'current-user', toRet = {}, users;
+        if(this.cache[key] != null) {
+            toRet = this.cache[key];
+        }
+        else if(this.storage.getItem(key) != null) {
+            toRet = JSON.parse(this.storage.getItem(key));
+            this.cache[key] = toRet;
+        }
+        else {
+            users = this.get(APP_CONST.API_USER);
+            toRet = _.find(users, function(e) {
+                return e.id === userId;
+            });
+            this.cache[key] = toRet;
+            this.storage.setItem(key, JSON.stringify(toRet));
+        }
+
+        return toRet;
+    };
+
     Service.prototype.addList = function(name) {
         var key = 'lists-details',
             list = {},
@@ -199,65 +258,21 @@ Provider.Service = (function(global, doc, $) {
 
         return this;
     };
-
-    Service.prototype.getMenuActivities = function() {
-        var key = 'user-activity', toRet = {}, activities;
-        if(this.storage.getItem(key) != null) {
-            toRet = JSON.parse(this.storage.getItem(key));
-        }
-        else {
-            activities = this.get(APP_CONST.API_ACTIVITIES);
-            toRet = _.sortByOrder(activities, ['timestamp'], false);
-            this.storage.setItem(key, JSON.stringify(toRet));
-        }
-
-        return toRet;
-    };
-
-    Service.prototype.addActivity = function(param) {
-        var key = 'user-activity',
-            activities = [];
-        if(this.storage.getItem(key) != null) {
-            activities = JSON.parse(this.storage.getItem(key));
-        }
-        else {
-            activities = this.get(APP_CONST.API_ACTIVITIES);
-            activities = _.sortByOrder(activities, ['timestamp'], false);
-        }
-
-        param.actionText = param.actionType + ' '
-            + param.object + ' <a href="javascript:void(0);">'
-            + param.objectTitle.substring(0, 19) + '</a>';
-        activities.unshift({
-            'user': param.user,
-            'actionText': param.actionText,
-            'timestamp': (param.timestamp != null) ? param.timestamp : new Date().getTime()
-        });
-
-        this.storage.setItem(key, JSON.stringify(activities));
-        app.menu.addActivity(param);
-    };
-
-    Service.prototype.getUserDetail = function(userId) {
-        var key = 'current-user', toRet = {}, users;
+    
+    Service.prototype.addCard = function(listId, name) {
+        var key = "cards-details", cards = [];
         if(this.cache[key] != null) {
-            toRet = this.cache[key];
+            cards = this.cache[key];
         }
         else if(this.storage.getItem(key) != null) {
-            toRet = JSON.parse(this.storage.getItem(key));
-            this.cache[key] = toRet;
+            cards = JSON.parse(this.storage.getItem(key));
+            this.cache[key] = cards;
         }
         else {
-            users = this.get(APP_CONST.API_USER);
-            toRet = _.find(users, function(e) {
-                return e.id === userId;
-            });
-            this.cache[key] = toRet;
-            this.storage.setItem(key, JSON.stringify(toRet));
+            throw new Error('Some error occured');
         }
-
-        return toRet;
-    };
+        
+    }
 
     return Service;
 
