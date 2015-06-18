@@ -19,7 +19,9 @@ var Card = (function(global, doc, $) {
         this.addCardCancelBtn = '.add-card-container > .cancel-card-add';
     }
 
-    
+    /**
+     * Binds card related events
+     */
     Card.prototype.bindEvents = function() {
         var that = this;
 
