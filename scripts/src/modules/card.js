@@ -36,7 +36,10 @@ var Card = (function(global, doc, $) {
             if(cardInputVal != null && cardInputVal !== '') {
                 $(this).parent().hide();
                 // TODO: to start from here
-                that.add($(this).parent().data('listid'), $(this).parent().find(that.cardNameInput).val());
+                that.add(
+                    $(this).parent().data('listid'),
+                    $(this).parent().find(that.cardNameInput).val()
+                );
                 $(this).parent().find(that.cardNameInput).val('');
             }
         });
@@ -51,7 +54,12 @@ var Card = (function(global, doc, $) {
         });
     };
 
-    Card.prototype.buildUi = function(data) {
+    /**
+	 * Loads the template inside DOM
+	 * 
+	 * @param data
+	 */
+	Card.prototype.buildUi = function(data) {
         var that = this;
         if(data != null) {
             this.data = data;

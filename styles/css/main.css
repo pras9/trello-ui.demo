@@ -346,7 +346,7 @@ a:hover {
     height: 30px;
     line-height: 17px;
     font-weight: bold;
-    color: #FFF;
+    color: #FFFFFF;
 }
 
 .btn.save-listname {
@@ -440,7 +440,7 @@ a:hover {
 }
 
 .add-card-container .btn {
-    height: 30px;    line-height: 17px;    font-weight: bold;    color: #FFF;
+    height: 30px;    line-height: 17px;    font-weight: bold;    color: #FFFFFF;
 }
 
 .btn.add-card {
@@ -448,5 +448,5 @@ a:hover {
 }
 
 .btn.cancel-card-add {
-    background-color: #777;
+    background-color: #777777;
 }
