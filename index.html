@@ -51,6 +51,9 @@
             </div>
         </div>
     </script>
+    <script type="text/template" id="card_view">
+        <div class="card"><%= title %></div>
+    </script>
     <script type="text/template" id="card_list_view">
         <div id="list<%= listid %>" class="list-container droppable">
             <div class="list panel">
@@ -86,12 +89,12 @@
                     if(cards != null && cards.length > 0) {
                         for(var i = 0; i < cards.length; i++) {
                     %>
-                    <div class="card <%= (cards[i].status == 1) ? '' : 'inactive' %>"><%= cards[i].detail %></div>
+                    <div class="card <%= (cards[i].status == 1) ? '' : 'inactive' %>"><%= cards[i].title %></div>
                     <%
                         }
                     }
                     %>
-                    <div class="add-card-container">
+                    <div class="add-card-container" data-listid="<%= listid %>">
                         <input type="text" class="input-cardname" />
                         <button class="btn add-card">Add</button>&nbsp;
                         <button class="btn cancel-card-add">X</button>

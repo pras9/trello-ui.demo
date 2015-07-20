@@ -36,7 +36,7 @@ Provider.Service = (function(global, doc, $) {
     Service.prototype.getBoardDetail = function(boardId) {
         var boardDetail = {},
             toRet = {},
-            key = 'boards-details';
+            key = 'trlo.service.boards';
         if(this.cache[key] != null) {
             boardDetail = this.cache[key];
         }
@@ -59,7 +59,7 @@ Provider.Service = (function(global, doc, $) {
     Service.prototype.getBoardLists = function(boardId) {
         var lists = {},
             toRet = {},
-            key = 'lists-details',
+            key = 'trlo.service.lists',
             listDetail = [],
             cards = [];
         if(this.cache[key] != null) {
@@ -89,9 +89,9 @@ Provider.Service = (function(global, doc, $) {
             });
 
             this.cache[key] = listDetail;
-            this.cache['cards-details'] = cards;
+            this.cache['trlo.service.cards'] = cards;
             this.storage.setItem(key, JSON.stringify(listDetail));
-            this.storage.setItem('cards-details', JSON.stringify(cards));
+            this.storage.setItem('trlo.service.cards', JSON.stringify(cards));
 
             toRet = listDetail;
         }
@@ -104,7 +104,7 @@ Provider.Service = (function(global, doc, $) {
     Service.prototype.getCards = function(listId) {
         var toRet = {},
             list = {},
-            key = 'cards-details';
+            key = 'trlo.service.cards';
         if(this.cache[key] != null) {
             toRet = this.cache[key];
         }
@@ -119,7 +119,7 @@ Provider.Service = (function(global, doc, $) {
     };
 
     Service.prototype.getMenuActivities = function() {
-        var key = 'user-activity', toRet = {}, activities;
+        var key = 'trlo.service.user-activity', toRet = {}, activities;
         if(this.storage.getItem(key) != null) {
             toRet = JSON.parse(this.storage.getItem(key));
         }
@@ -133,7 +133,7 @@ Provider.Service = (function(global, doc, $) {
     };
 
     Service.prototype.addActivity = function(param) {
-        var key = 'user-activity',
+        var key = 'trlo.service.user-activity',
             activities = [];
         if(this.storage.getItem(key) != null) {
             activities = JSON.parse(this.storage.getItem(key));
@@ -157,7 +157,7 @@ Provider.Service = (function(global, doc, $) {
     };
 
     Service.prototype.getUserDetail = function(userId) {
-        var key = 'current-user', toRet = {}, users;
+        var key = 'trlo.service.current-user', toRet = {}, users;
         if(this.cache[key] != null) {
             toRet = this.cache[key];
         }
@@ -178,7 +178,7 @@ Provider.Service = (function(global, doc, $) {
     };
 
     Service.prototype.addList = function(name) {
-        var key = 'lists-details',
+        var key = 'trlo.service.lists',
             list = {},
             lists = [],
             maxId,
@@ -218,7 +218,7 @@ Provider.Service = (function(global, doc, $) {
     };
 
     Service.prototype.setListName = function(listId, name) {
-        var key = 'lists-details',
+        var key = 'trlo.service.lists',
             lists = [];
         if(this.cache[key] != null) {
             lists = this.cache[key];
@@ -239,7 +239,7 @@ Provider.Service = (function(global, doc, $) {
     };
 
     Service.prototype.archiveList = function(listId) {
-        var key = 'lists-details',
+        var key = 'trlo.service.lists',
             lists = [];
         if(this.cache[key] != null) {
             lists = this.cache[key];
@@ -260,7 +260,10 @@ Provider.Service = (function(global, doc, $) {
     };
     
     Service.prototype.addCard = function(listId, name) {
-        var key = "cards-details", cards = [];
+        var key = "trlo.service.cards", 
+            cards = [], 
+            maxId,
+            timestamp = new Date().getTime();
         if(this.cache[key] != null) {
             cards = this.cache[key];
         }
@@ -271,7 +274,34 @@ Provider.Service = (function(global, doc, $) {
         else {
             throw new Error('Some error occured');
         }
-        
+
+        maxId = _.result(_.max(cards, function(e) {
+            return e.id;
+        }), 'id');
+
+        cards.push({
+            "id" : maxId + 1,
+            "listId" : listId,
+            "title" : name,
+            "description" : "",
+            "created" : timestamp,
+            "modified" : timestamp,
+            "labels" : {},
+            "dueDate" : null,
+            "status" : 1
+        });
+        this.cache[key] = cards;
+        this.storage.setItem(key, JSON.stringify(cards));
+
+        this.addActivity({
+            'user': app.currentUserId,
+            'actionType': 'added',
+            'object': 'card',
+            'objectTitle': name,
+            'timestamp': timestamp
+        });
+
+        return maxId + 1;
     }
 
     return Service;

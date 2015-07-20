@@ -44,6 +44,7 @@ var List = (function(global, doc, $) {
                 .show()
                 .find(that.listRenameInput).val($(this).text());
         });
+        
         $(this.listRenameSaveBtn).off('click').on('click', function() {
             var listName = $(this).parent().find(that.listRenameInput).val(),
                 listId = $(this).parent().parent().find(that.listHeader).data('listid');
@@ -53,6 +54,7 @@ var List = (function(global, doc, $) {
             $(this).parent().hide();
             $(this).parent().parent().find(that.listHeader).show();
         });
+        
         $(this.listRenameCancelBtn).off('click').on('click', function() {
             $(this).parent().hide();
             $(this).parent().parent().find(that.listHeader).show();
@@ -64,11 +66,13 @@ var List = (function(global, doc, $) {
             that.add($(this).parent().find(that.listRenameInput).val());
             $(this).parent().find(that.listRenameInput).val('');
         });
+        
         $(this.newListCancelBtn).off('click').on('click', function() {
             $(this).parent().hide();
             $(that.addNewList).show();
             $(this).parent().find(that.listRenameInput).val('');
         });
+        
         $(this.addNewList).off('click').on('click', function() {
             $(that.newListAddBlock).show();
             $(this).hide();
@@ -79,8 +83,8 @@ var List = (function(global, doc, $) {
             $(that.dropdownList).hide();
             $(that.dropdownList + '[rel="list'+listid+'"]').show();
             $("#list"+listid).find(that.cardsContainer).scrollTop(0);
-            
         });
+        
         $(this.dropdownListClose).off('click').on('click', function() {
             $(this).parent().parent().hide();
             
@@ -88,6 +92,7 @@ var List = (function(global, doc, $) {
                 $(this).scrollTop($(this).prop('scrollHeight'));
             });
         });
+        
         $(this.archiveListBtn).off('click').on('click', function() {
             that.archive($(this).data('listid'));
         });
@@ -130,6 +135,7 @@ var List = (function(global, doc, $) {
             'id': listId,
             'name': name
         });
+        this.bindEvents();
     };
 
     /**

@@ -165,7 +165,7 @@ Provider.Service = (function(global, doc, $) {
     Service.prototype.getBoardDetail = function(boardId) {
         var boardDetail = {},
             toRet = {},
-            key = 'boards-details';
+            key = 'trlo.service.boards';
         if(this.cache[key] != null) {
             boardDetail = this.cache[key];
         }
@@ -188,7 +188,7 @@ Provider.Service = (function(global, doc, $) {
     Service.prototype.getBoardLists = function(boardId) {
         var lists = {},
             toRet = {},
-            key = 'lists-details',
+            key = 'trlo.service.lists',
             listDetail = [],
             cards = [];
         if(this.cache[key] != null) {
@@ -218,9 +218,9 @@ Provider.Service = (function(global, doc, $) {
             });
 
             this.cache[key] = listDetail;
-            this.cache['cards-details'] = cards;
+            this.cache['trlo.service.cards'] = cards;
             this.storage.setItem(key, JSON.stringify(listDetail));
-            this.storage.setItem('cards-details', JSON.stringify(cards));
+            this.storage.setItem('trlo.service.cards', JSON.stringify(cards));
 
             toRet = listDetail;
         }
@@ -233,7 +233,7 @@ Provider.Service = (function(global, doc, $) {
     Service.prototype.getCards = function(listId) {
         var toRet = {},
             list = {},
-            key = 'cards-details';
+            key = 'trlo.service.cards';
         if(this.cache[key] != null) {
             toRet = this.cache[key];
         }
@@ -247,8 +247,67 @@ Provider.Service = (function(global, doc, $) {
         });
     };
 
+    Service.prototype.getMenuActivities = function() {
+        var key = 'trlo.service.user-activity', toRet = {}, activities;
+        if(this.storage.getItem(key) != null) {
+            toRet = JSON.parse(this.storage.getItem(key));
+        }
+        else {
+            activities = this.get(APP_CONST.API_ACTIVITIES);
+            toRet = _.sortByOrder(activities, ['timestamp'], false);
+            this.storage.setItem(key, JSON.stringify(toRet));
+        }
+
+        return toRet;
+    };
+
+    Service.prototype.addActivity = function(param) {
+        var key = 'trlo.service.user-activity',
+            activities = [];
+        if(this.storage.getItem(key) != null) {
+            activities = JSON.parse(this.storage.getItem(key));
+        }
+        else {
+            activities = this.get(APP_CONST.API_ACTIVITIES);
+            activities = _.sortByOrder(activities, ['timestamp'], false);
+        }
+
+        param.actionText = param.actionType + ' '
+            + param.object + ' <a href="javascript:void(0);">'
+            + param.objectTitle.substring(0, 19) + '</a>';
+        activities.unshift({
+            'user': param.user,
+            'actionText': param.actionText,
+            'timestamp': (param.timestamp != null) ? param.timestamp : new Date().getTime()
+        });
+
+        this.storage.setItem(key, JSON.stringify(activities));
+        app.menu.addActivity(param);
+    };
+
+    Service.prototype.getUserDetail = function(userId) {
+        var key = 'trlo.service.current-user', toRet = {}, users;
+        if(this.cache[key] != null) {
+            toRet = this.cache[key];
+        }
+        else if(this.storage.getItem(key) != null) {
+            toRet = JSON.parse(this.storage.getItem(key));
+            this.cache[key] = toRet;
+        }
+        else {
+            users = this.get(APP_CONST.API_USER);
+            toRet = _.find(users, function(e) {
+                return e.id === userId;
+            });
+            this.cache[key] = toRet;
+            this.storage.setItem(key, JSON.stringify(toRet));
+        }
+
+        return toRet;
+    };
+
     Service.prototype.addList = function(name) {
-        var key = 'lists-details',
+        var key = 'trlo.service.lists',
             list = {},
             lists = [],
             maxId,
@@ -288,7 +347,7 @@ Provider.Service = (function(global, doc, $) {
     };
 
     Service.prototype.setListName = function(listId, name) {
-        var key = 'lists-details',
+        var key = 'trlo.service.lists',
             lists = [];
         if(this.cache[key] != null) {
             lists = this.cache[key];
@@ -309,7 +368,7 @@ Provider.Service = (function(global, doc, $) {
     };
 
     Service.prototype.archiveList = function(listId) {
-        var key = 'lists-details',
+        var key = 'trlo.service.lists',
             lists = [];
         if(this.cache[key] != null) {
             lists = this.cache[key];
@@ -328,65 +387,51 @@ Provider.Service = (function(global, doc, $) {
 
         return this;
     };
-
-    Service.prototype.getMenuActivities = function() {
-        var key = 'user-activity', toRet = {}, activities;
-        if(this.storage.getItem(key) != null) {
-            toRet = JSON.parse(this.storage.getItem(key));
-        }
-        else {
-            activities = this.get(APP_CONST.API_ACTIVITIES);
-            toRet = _.sortByOrder(activities, ['timestamp'], false);
-            this.storage.setItem(key, JSON.stringify(toRet));
-        }
-
-        return toRet;
-    };
-
-    Service.prototype.addActivity = function(param) {
-        var key = 'user-activity',
-            activities = [];
-        if(this.storage.getItem(key) != null) {
-            activities = JSON.parse(this.storage.getItem(key));
-        }
-        else {
-            activities = this.get(APP_CONST.API_ACTIVITIES);
-            activities = _.sortByOrder(activities, ['timestamp'], false);
-        }
-
-        param.actionText = param.actionType + ' '
-            + param.object + ' <a href="javascript:void(0);">'
-            + param.objectTitle.substring(0, 19) + '</a>';
-        activities.unshift({
-            'user': param.user,
-            'actionText': param.actionText,
-            'timestamp': (param.timestamp != null) ? param.timestamp : new Date().getTime()
-        });
-
-        this.storage.setItem(key, JSON.stringify(activities));
-        app.menu.addActivity(param);
-    };
-
-    Service.prototype.getUserDetail = function(userId) {
-        var key = 'current-user', toRet = {}, users;
+    
+    Service.prototype.addCard = function(listId, name) {
+        var key = "trlo.service.cards", 
+            cards = [], 
+            maxId,
+            timestamp = new Date().getTime();
         if(this.cache[key] != null) {
-            toRet = this.cache[key];
+            cards = this.cache[key];
         }
         else if(this.storage.getItem(key) != null) {
-            toRet = JSON.parse(this.storage.getItem(key));
-            this.cache[key] = toRet;
+            cards = JSON.parse(this.storage.getItem(key));
+            this.cache[key] = cards;
         }
         else {
-            users = this.get(APP_CONST.API_USER);
-            toRet = _.find(users, function(e) {
-                return e.id === userId;
-            });
-            this.cache[key] = toRet;
-            this.storage.setItem(key, JSON.stringify(toRet));
+            throw new Error('Some error occured');
         }
 
-        return toRet;
-    };
+        maxId = _.result(_.max(cards, function(e) {
+            return e.id;
+        }), 'id');
+
+        cards.push({
+            "id" : maxId + 1,
+            "listId" : listId,
+            "title" : name,
+            "description" : "",
+            "created" : timestamp,
+            "modified" : timestamp,
+            "labels" : {},
+            "dueDate" : null,
+            "status" : 1
+        });
+        this.cache[key] = cards;
+        this.storage.setItem(key, JSON.stringify(cards));
+
+        this.addActivity({
+            'user': app.currentUserId,
+            'actionType': 'added',
+            'object': 'card',
+            'objectTitle': name,
+            'timestamp': timestamp
+        });
+
+        return maxId + 1;
+    }
 
     return Service;
 
@@ -460,10 +505,13 @@ var Card = (function(global, doc, $) {
         this.cardDetailTemplate = 'card_detail';
         this.cardsContainer = '.cards-container';
         this.addNewCardBtn = '.add-new-card';
+        this.footerAddNewCardBtn = '.list-footer > .add-new-card';
         this.cardAddContainer = '.add-card-container';
         this.cardNameInput = '.input-cardname';
         this.addCardSubmitBtn = '.add-card-container > .add-card';
         this.addCardCancelBtn = '.add-card-container > .cancel-card-add';
+        this.dropdownList = '.list-drop';
+        this.$currentList = null;
     }
 
     /**
@@ -474,32 +522,42 @@ var Card = (function(global, doc, $) {
 
         $(this.addNewCardBtn).off('click').on('click', function() {
             var listId = $(this).data('listid');
-            $('#list' + listId).find(that.cardAddContainer).show();
-            $('#list' + listId).find(that.cardsContainer)
-                .scrollTop($('#list' + listId).find(that.cardsContainer).prop('scrollHeight'));
+            that.$currentList = $('#list' + listId);
+            that.$currentList.find(that.cardAddContainer).show();
+            that.$currentList.find(that.cardsContainer)
+                .scrollTop(that.$currentList.find(that.cardsContainer).prop('scrollHeight'));
+            
+            that.$currentList.find(that.footerAddNewCardBtn).hide();
+            that.$currentList.find(that.dropdownList).hide();
         });
+        
         $(this.addCardSubmitBtn).off('click').on('click', function() {
-            var cardInputVal = $(this).parent().find(that.listRenameInput).val();
+            var cardInputVal = $(this).parent().find(that.cardNameInput).val();
             if(cardInputVal != null && cardInputVal !== '') {
                 $(this).parent().hide();
-                // TODO: to start from here
-                $(that.addNewList).show();
-                that.add($(this).parent().find(that.listRenameInput).val());
-                $(this).parent().find(that.listRenameInput).val('');
+                that.add(
+                    $(this).parent().data('listid'),
+                    $(this).parent().find(that.cardNameInput).val()
+                );
+                $(this).parent().find(that.cardNameInput).val('');
             }
-        });
-        $(this.newListCancelBtn).off('click').on('click', function() {
             $(this).parent().hide();
-            $(that.addNewList).show();
-            $(this).parent().find(that.listRenameInput).val('');
+            $(this).parent().parent().parent().find(that.addNewCardBtn).show();
         });
-        $(this.addNewList).off('click').on('click', function() {
-            $(that.newListAddBlock).show();
-            $(this).hide();
+        
+        $(this.addCardCancelBtn).off('click').on('click', function() {
+            $(this).parent().hide();
+            $(this).parent().find(that.cardNameInput).val('');
+            $(this).parent().parent().parent().find(that.addNewCardBtn).show();
         });
     };
 
-    Card.prototype.buildUi = function(data) {
+    /**
+	 * Loads the template inside DOM
+	 * 
+	 * @param data
+	 */
+	Card.prototype.buildUi = function(data) {
         var that = this;
         if(data != null) {
             this.data = data;
@@ -507,23 +565,17 @@ var Card = (function(global, doc, $) {
         if(this.data == null) {
             throw new Error('Cannot build ui for null list');
         }
-
-        this.data.cards = app.service.getCards(this.data.id);
-        $(this.beforeElement).before(
-            utils.loadTemplate(that.template, {
-                'listid': that.data.id,
-                'list_header': that.data.name,
-                'cards': that.data.cards
-            })
-        );
     };
 
-    Card.prototype.add = function(name) {
-        var listId = app.service.addList(name);
-        this.buildUi({
-            'id': listId,
-            'name': name
-        });
+    Card.prototype.add = function(listId, name) {
+        var cardId = app.service.addCard(listId, name),
+            that = this;
+        
+        that.$currentList.find(that.cardAddContainer).before(
+            utils.loadTemplate(that.template, {
+                'title': name
+            })
+        );
     };
 
     Card.prototype.rename = function(listId, listName) {
@@ -595,6 +647,7 @@ var List = (function(global, doc, $) {
                 .show()
                 .find(that.listRenameInput).val($(this).text());
         });
+        
         $(this.listRenameSaveBtn).off('click').on('click', function() {
             var listName = $(this).parent().find(that.listRenameInput).val(),
                 listId = $(this).parent().parent().find(that.listHeader).data('listid');
@@ -604,6 +657,7 @@ var List = (function(global, doc, $) {
             $(this).parent().hide();
             $(this).parent().parent().find(that.listHeader).show();
         });
+        
         $(this.listRenameCancelBtn).off('click').on('click', function() {
             $(this).parent().hide();
             $(this).parent().parent().find(that.listHeader).show();
@@ -615,11 +669,13 @@ var List = (function(global, doc, $) {
             that.add($(this).parent().find(that.listRenameInput).val());
             $(this).parent().find(that.listRenameInput).val('');
         });
+        
         $(this.newListCancelBtn).off('click').on('click', function() {
             $(this).parent().hide();
             $(that.addNewList).show();
             $(this).parent().find(that.listRenameInput).val('');
         });
+        
         $(this.addNewList).off('click').on('click', function() {
             $(that.newListAddBlock).show();
             $(this).hide();
@@ -630,8 +686,8 @@ var List = (function(global, doc, $) {
             $(that.dropdownList).hide();
             $(that.dropdownList + '[rel="list'+listid+'"]').show();
             $("#list"+listid).find(that.cardsContainer).scrollTop(0);
-            
         });
+        
         $(this.dropdownListClose).off('click').on('click', function() {
             $(this).parent().parent().hide();
             
@@ -639,6 +695,7 @@ var List = (function(global, doc, $) {
                 $(this).scrollTop($(this).prop('scrollHeight'));
             });
         });
+        
         $(this.archiveListBtn).off('click').on('click', function() {
             that.archive($(this).data('listid'));
         });
@@ -681,6 +738,7 @@ var List = (function(global, doc, $) {
             'id': listId,
             'name': name
         });
+        this.bindEvents();
     };
 
     /**

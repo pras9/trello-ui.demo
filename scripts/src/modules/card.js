@@ -13,10 +13,13 @@ var Card = (function(global, doc, $) {
         this.cardDetailTemplate = 'card_detail';
         this.cardsContainer = '.cards-container';
         this.addNewCardBtn = '.add-new-card';
+        this.footerAddNewCardBtn = '.list-footer > .add-new-card';
         this.cardAddContainer = '.add-card-container';
         this.cardNameInput = '.input-cardname';
         this.addCardSubmitBtn = '.add-card-container > .add-card';
         this.addCardCancelBtn = '.add-card-container > .cancel-card-add';
+        this.dropdownList = '.list-drop';
+        this.$currentList = null;
     }
 
     /**
@@ -27,30 +30,33 @@ var Card = (function(global, doc, $) {
 
         $(this.addNewCardBtn).off('click').on('click', function() {
             var listId = $(this).data('listid');
-            $('#list' + listId).find(that.cardAddContainer).show();
-            $('#list' + listId).find(that.cardsContainer)
-                .scrollTop($('#list' + listId).find(that.cardsContainer).prop('scrollHeight'));
+            that.$currentList = $('#list' + listId);
+            that.$currentList.find(that.cardAddContainer).show();
+            that.$currentList.find(that.cardsContainer)
+                .scrollTop(that.$currentList.find(that.cardsContainer).prop('scrollHeight'));
+            
+            that.$currentList.find(that.footerAddNewCardBtn).hide();
+            that.$currentList.find(that.dropdownList).hide();
         });
+        
         $(this.addCardSubmitBtn).off('click').on('click', function() {
             var cardInputVal = $(this).parent().find(that.cardNameInput).val();
             if(cardInputVal != null && cardInputVal !== '') {
                 $(this).parent().hide();
-                // TODO: to start from here
                 that.add(
                     $(this).parent().data('listid'),
                     $(this).parent().find(that.cardNameInput).val()
                 );
                 $(this).parent().find(that.cardNameInput).val('');
             }
-        });
-        $(this.newListCancelBtn).off('click').on('click', function() {
             $(this).parent().hide();
-            $(that.addNewList).show();
-            $(this).parent().find(that.listRenameInput).val('');
+            $(this).parent().parent().parent().find(that.addNewCardBtn).show();
         });
-        $(this.addNewList).off('click').on('click', function() {
-            $(that.newListAddBlock).show();
-            $(this).hide();
+        
+        $(this.addCardCancelBtn).off('click').on('click', function() {
+            $(this).parent().hide();
+            $(this).parent().find(that.cardNameInput).val('');
+            $(this).parent().parent().parent().find(that.addNewCardBtn).show();
         });
     };
 
@@ -67,23 +73,17 @@ var Card = (function(global, doc, $) {
         if(this.data == null) {
             throw new Error('Cannot build ui for null list');
         }
-
-        this.data.cards = app.service.getCards(this.data.id);
-        $(this.beforeElement).before(
-            utils.loadTemplate(that.template, {
-                'listid': that.data.id,
-                'list_header': that.data.name,
-                'cards': that.data.cards
-            })
-        );
     };
 
     Card.prototype.add = function(listId, name) {
-        var cardId = app.service.addCard(listId, name);
-        /*this.buildUi({
-            'id': listId,
-            'name': name
-        });*/
+        var cardId = app.service.addCard(listId, name),
+            that = this;
+        
+        that.$currentList.find(that.cardAddContainer).before(
+            utils.loadTemplate(that.template, {
+                'title': name
+            })
+        );
     };
 
     Card.prototype.rename = function(listId, listName) {

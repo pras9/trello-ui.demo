@@ -4,3 +4,4 @@
 __files/unversioned/*
 .brackets.json
 node_modules/*
+nbproject
